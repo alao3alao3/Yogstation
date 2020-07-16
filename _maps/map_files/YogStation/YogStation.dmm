@@ -47507,6 +47507,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"dRI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 8
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "36"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "dRK" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1{
@@ -87514,7 +87526,7 @@ arP
 awf
 axD
 aqR
-axv
+dRI
 aAT
 aCG
 aqZ
