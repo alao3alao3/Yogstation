@@ -187,12 +187,12 @@
 
 ////////////////////AUGMENTATION NANITES//////////////////////////////////////
 
-/datum/design/nanites/nervous
-	name = "Nerve Support"
-	desc = "The nanites act as a secondary nervous system, reducing the amount of time the host is stunned."
-	id = "nervous_nanites"
-	program_type = /datum/nanite_program/nervous
-	category = list("Augmentation Nanites")
+///datum/design/nanites/nervous
+//	name = "Nerve Support"
+//	desc = "The nanites act as a secondary nervous system, reducing the amount of time the host is stunned."
+//	id = "nervous_nanites"
+//	program_type = /datum/nanite_program/nervous
+//	category = list("Augmentation Nanites")
 
 /datum/design/nanites/hardening
 	name = "Dermal Hardening"
@@ -222,12 +222,12 @@
 	program_type = /datum/nanite_program/conductive
 	category = list("Augmentation Nanites")
 
-/datum/design/nanites/adrenaline
-	name = "Adrenaline Burst"
-	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
-	id = "adrenaline_nanites"
-	program_type = /datum/nanite_program/triggered/adrenaline
-	category = list("Augmentation Nanites")
+///datum/design/nanites/adrenaline
+//	name = "Adrenaline Burst"
+//	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
+//	id = "adrenaline_nanites"
+//	program_type = /datum/nanite_program/triggered/adrenaline
+//	category = list("Augmentation Nanites")
 
 /datum/design/nanites/mindshield
 	name = "Mental Barrier"
