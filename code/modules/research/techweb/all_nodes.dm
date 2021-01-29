@@ -1000,7 +1000,7 @@
 	display_name = "Neural Nanite Programming"
 	description = "Nanite programs affecting nerves and brain matter."
 	prereq_ids = list("nanite_bio")
-	design_ids = list("nervous_nanites", "brainheal_nanites", "paralyzing_nanites", "stun_nanites", "selfscan_nanites")
+	design_ids = list("brainheal_nanites", "paralyzing_nanites", "stun_nanites", "selfscan_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
 	export_price = 5000
 
@@ -1018,7 +1018,7 @@
 	display_name = "Harmonic Nanite Programming"
 	description = "Nanite programs that require seamless integration between nanites and biology."
 	prereq_ids = list("nanite_bio","nanite_smart","nanite_mesh")
-	design_ids = list("fakedeath_nanites","researchplus_nanites","aggressive_nanites","defib_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites","adrenaline_nanites")
+	design_ids = list("fakedeath_nanites","researchplus_nanites","aggressive_nanites","defib_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000, TECHWEB_POINT_TYPE_NANITES = 2000)
 	export_price = 8000
 
