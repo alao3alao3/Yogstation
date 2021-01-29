@@ -63,8 +63,8 @@
 /obj/item/disk/nanite_program/repairing
 	program_type = /datum/nanite_program/repairing
 
-/obj/item/disk/nanite_program/nervous
-	program_type = /datum/nanite_program/nervous
+///obj/item/disk/nanite_program/nervous
+//	program_type = /datum/nanite_program/nervous
 
 /obj/item/disk/nanite_program/hardening
 	program_type = /datum/nanite_program/hardening
