@@ -287,8 +287,10 @@
 		C = source
 		if(!original_owner)
 			original_owner = source
-	else 
+	else
 		C = owner
+		if(original_owner == "limb grower")
+			original_owner = owner
 		if(original_owner && owner != original_owner) //Foreign limb
 			no_update = TRUE
 		else
@@ -330,7 +332,7 @@
 		else
 			species_color = ""
 
-		if(!dropping_limb && H.dna.check_mutation(HULK))
+		if(!dropping_limb && (H.dna.check_mutation(HULK) || H.dna.check_mutation(ACTIVE_HULK)))
 			mutation_color = "00aa00"
 		else
 			mutation_color = ""
@@ -400,7 +402,10 @@
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else if(use_digitigrade)
-				limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
+				if("[species_id]" == "polysmorph")
+					limb.icon_state = "pdigitigrade_[use_digitigrade]_[body_zone]"
+				else
+					limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
 		else
