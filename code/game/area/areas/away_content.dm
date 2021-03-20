@@ -22,6 +22,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	name = "Super Secret Room"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = STANDARD_GRAVITY
+	noteleport = TRUE
 
 /area/awaymission/vr
 	name = "Virtual Reality"
