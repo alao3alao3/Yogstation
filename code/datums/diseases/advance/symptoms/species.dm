@@ -9,8 +9,7 @@
 	severity = 0
 
 /datum/symptom/undead_adaptation/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	A.process_dead = TRUE
 	A.infectable_biotypes |= MOB_UNDEAD
@@ -26,7 +25,6 @@
 	severity = 0
 
 /datum/symptom/inorganic_adaptation/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	A.infectable_biotypes |= MOB_INORGANIC

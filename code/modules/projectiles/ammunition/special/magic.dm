@@ -8,9 +8,6 @@
 /obj/item/ammo_casing/magic/change
 	projectile_type = /obj/item/projectile/magic/change
 
-/obj/item/ammo_casing/magic/cheese
-	projectile_type = /obj/item/projectile/magic/cheese
-
 /obj/item/ammo_casing/magic/animate
 	projectile_type = /obj/item/projectile/magic/animate
 

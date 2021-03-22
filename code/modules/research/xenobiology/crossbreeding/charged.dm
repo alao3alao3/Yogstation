@@ -180,10 +180,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/pink
 	colour = "pink"
-	effect_desc = "Produces slime empathy potion."
+	effect_desc = "Produces a... lovepotion... no ERP."
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
-	new /obj/item/slimepotion/empathypotion(get_turf(user))
+	new /obj/item/slimepotion/lovepotion(get_turf(user))
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()
 

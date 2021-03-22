@@ -68,11 +68,10 @@
 /area/ruin/powered)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/flashlight/flare/signal,
+/obj/item/flashlight/flare,
 /turf/open/floor/pod/light,
 /area/ruin/powered)
 "p" = (
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "q" = (
@@ -289,7 +288,7 @@ i
 i
 i
 z
-d
+k
 b
 b
 a
@@ -306,7 +305,7 @@ i
 q
 i
 A
-d
+k
 b
 b
 a
@@ -323,7 +322,7 @@ n
 r
 i
 B
-d
+k
 b
 b
 a

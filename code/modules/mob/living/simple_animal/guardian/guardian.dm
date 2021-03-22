@@ -439,13 +439,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>")
 				guardians -= G
 				if(!guardians.len)
-					remove_verb(src, /mob/living/proc/guardian_reset)
+					verbs -= /mob/living/proc/guardian_reset
 			else
 				to_chat(src, "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>")
 		else
 			to_chat(src, "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>")
 	else
-		remove_verb(src, /mob/living/proc/guardian_reset)
+		verbs -= /mob/living/proc/guardian_reset
 
 ////////parasite tracking/finding procs
 
@@ -575,11 +575,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("carp")
 			to_chat(user, "[G.carp_fluff_string]")
 			to_chat(user, "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been caught!</span>")
-
-	add_verb(user, list(/mob/living/proc/guardian_comm, \
-						/mob/living/proc/guardian_recall, \
-						/mob/living/proc/guardian_reset))
-	G?.client.init_verbs()
+	user.verbs += /mob/living/proc/guardian_comm
+	user.verbs += /mob/living/proc/guardian_recall
+	user.verbs += /mob/living/proc/guardian_reset
 
 /obj/item/guardiancreator/choose
 	random = FALSE
@@ -695,7 +693,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'yogstation/icons/obj/food/food.dmi'
 	icon_state = "fishfingers"
 	theme = "carp"
 	mob_name = "Holocarp"

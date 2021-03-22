@@ -13,7 +13,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,25)
+	var/loot = rand(1,30)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -41,7 +41,7 @@
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
-			new /obj/item/reagent_containers/glass/bottle/necropolis_seed(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
 			new /obj/item/jacobs_ladder(src)
 		if(14)
@@ -49,30 +49,41 @@
 		if(15)
 			new /obj/item/nullrod/armblade(src)
 		if(16)
+			new /obj/item/guardiancreator/random(src)
+		if(17)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
 			else
 				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
-		if(17)
-			new /obj/item/warp_cube/red(src)
 		if(18)
-			new /obj/item/organ/heart/gland/heals(src)
+			new /obj/item/warp_cube/red(src)
 		if(19)
-			new /obj/item/immortality_talisman(src)
+			new /obj/item/wisp_lantern(src)
 		if(20)
-			new /obj/item/voodoo(src)
+			new /obj/item/immortality_talisman(src)
 		if(21)
+			new /obj/item/gun/magic/hook(src)
+		if(22)
+			new /obj/item/voodoo(src)
+		if(23)
+			new /obj/item/grenade/clusterbuster/inferno(src)
+		if(24)
 			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(22)
+		if(25)
+			new /obj/item/book/granter/spell/summonitem(src)
+		if(26)
 			new /obj/item/book_of_babel(src)
-		if(23)
+		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(24)
+		if(28)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
-		if(25)
+		if(29)
 			new /obj/item/rune_scimmy(src)
+		if(30)
+			new /obj/item/reagent_containers/glass/bottle/necropolis_seed(src)
+
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
 	name = "KA Mod Disk"
@@ -109,28 +120,28 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(/datum/material/iron = 7000, /datum/material/glass = 3000, /datum/material/silver = 3000, /datum/material/gold = 3000, /datum/material/diamond = 4000)
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace = 2000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 5000, /datum/material/uranium = 5000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(/datum/material/iron = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
 	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
@@ -215,10 +226,6 @@
 	return ..()
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
-	var/list/hasholos = user.hasparasites()
-	if(hasholos.len)
-		to_chat(user, "<span class='warning'>The pendant refuses to work with a guardian spirit...</span>")
-		return
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
@@ -578,7 +585,7 @@
 	righthand_file = 'yogstation/icons/mob/inhands/weapons/scimmy_righthand.dmi'
 	icon = 'yogstation/icons/obj/lavaland/artefacts.dmi'
 	icon_state = "rune_scimmy"
-	force = 28
+	force = 35
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	damtype = BRUTE
 	sharpness = IS_SHARP
@@ -616,7 +623,7 @@
 	if(iscarbon(M) && M.stat != DEAD)
 		var/mob/living/carbon/C = M
 		var/holycheck = ishumanbasic(C)
-		if(!(holycheck || islizard(C) || ismoth(C)) || reac_volume < 5) // implying polysmorphs are holy //as with all things,
+		if(!(holycheck || islizard(C)) || reac_volume < 5) // implying xenohumans are holy //as with all things,
 			if(method == INGEST && show_message)
 				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
@@ -628,9 +635,6 @@
 			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 		if(islizard(C))
 			to_chat(C, "<span class='notice'>You feel blessed... by... something?</span>")
-			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-		if(ismoth(C))
-			to_chat(C, "<span class='notice'>Your wings feel.... stronger?</span>")
 			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
 		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
 		C.adjustBruteLoss(20)
@@ -763,15 +767,15 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/PopulateContents()
-	var/loot = rand(1,3)
+	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
 			new /obj/item/melee/ghost_sword(src)
 		if(2)
 			new /obj/item/lava_staff(src)
-			new /obj/item/book/granter/spell/sacredflame(src)
 		if(3)
-			new /obj/item/dragon_egg(src)
+			new /obj/item/book/granter/spell/sacredflame(src)
+			new /obj/item/gun/magic/wand/fireball(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 
@@ -895,10 +899,8 @@
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
 			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
-			H.set_species(/datum/species/lizard)
 			H.eye_color = "fee5a3"
-			H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-			H.updateappearance()
+			H.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
 			H.set_species(/datum/species/skeleton)
@@ -998,29 +1000,6 @@
 	icon_state = "lavastaff_warn"
 	duration = 50
 
-//Dragon Egg
-
-/obj/item/dragon_egg
-	name = "dragon's egg"
-	desc = "A large egg-shaped rock. It's cold to the touch..."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "large_egg"
-	color = "#2C2C2C"
-
-/obj/item/dragon_egg/burn()
-	visible_message("<span class='boldwarning'>[src] suddenly begins to glow red and starts violently shaking!</span>")
-	name = "heated dragon's egg"
-	desc = "A large egg seemingly made out of rock. It's red-hot and seems to be shaking!"
-	color = "#990000"
-	extinguish()
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	addtimer(CALLBACK(src, .proc/hatch), 20 SECONDS)
-
-/obj/item/dragon_egg/proc/hatch()
-	visible_message("<span class='boldwarning'>[src] suddenly cracks apart, revealing a tiny ash drake!</span>")
-	new /mob/living/simple_animal/hostile/drakeling(get_turf(src))
-	qdel(src)
-
 //Bubblegum
 /obj/structure/closet/crate/necropolis/bubblegum
 	name = "bubblegum chest"
@@ -1028,7 +1007,7 @@
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/space/hostile_environment(src)
 	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
-	var/loot = rand(1,4)
+	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
 			new /obj/item/mayhem(src)
@@ -1036,8 +1015,6 @@
 			new /obj/item/blood_contract(src)
 		if(3)
 			new /obj/item/gun/magic/staff/spellblade(src)
-		if(4)
-			new /obj/item/organ/stomach/cursed(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"
@@ -1402,7 +1379,7 @@
 
 /obj/item/hierophant_antenna
 	name = "hierophant's antenna"
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/lavaland/artefacts.dmi' 
 	icon_state = "hierophant_antenna"
 	item_state = "hierophant_antenna"
 	desc = "Extends the range of the herald's power."

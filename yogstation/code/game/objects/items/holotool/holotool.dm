@@ -72,10 +72,7 @@
 		holo_item.color = current_color
 		item_state = current_tool.name
 		add_overlay(holo_item)
-		if(current_tool.name == "off")
-			set_light(0)
-		else
-			set_light(3, null, current_color)
+		set_light(3, null, current_color)
 	else
 		item_state = "holotool"
 		icon_state = "holotool"

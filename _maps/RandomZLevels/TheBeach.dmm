@@ -16,44 +16,44 @@
 /area/awaymission/beach)
 "ad" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 1;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 1
 	},
 /area/awaymission/beach)
 "ae" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 8;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 8
 	},
 /area/awaymission/beach)
 "af" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 9;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 9
 	},
 /area/awaymission/beach)
 "ag" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 1;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 1
 	},
 /area/awaymission/beach)
 "ah" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 5;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 5
 	},
 /area/awaymission/beach)
 "ai" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 4;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 4
 	},
 /area/awaymission/beach)
 "aj" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 8
 	},
 /area/awaymission/beach)
 "ak" = (
@@ -69,8 +69,8 @@
 /area/awaymission/beach)
 "am" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 4;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 4
 	},
 /area/awaymission/beach)
 "an" = (
@@ -82,8 +82,8 @@
 /area/awaymission/beach)
 "ao" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 10;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 10
 	},
 /area/awaymission/beach)
 "ap" = (
@@ -91,8 +91,8 @@
 /area/awaymission/beach)
 "aq" = (
 /turf/open/floor/plating/beach/coastline_t{
-	dir = 6;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 6
 	},
 /area/awaymission/beach)
 "ar" = (
@@ -158,26 +158,26 @@
 /area/awaymission/beach)
 "aw" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 6;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 6
 	},
 /area/awaymission/beach)
 "ax" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 10;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 10
 	},
 /area/awaymission/beach)
 "ay" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 4;
-	icon_state = "sandwater_inner"
+	icon_state = "sandwater_inner";
+	dir = 4
 	},
 /area/awaymission/beach)
 "az" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 1;
-	icon_state = "sandwater_inner"
+	icon_state = "sandwater_inner";
+	dir = 1
 	},
 /area/awaymission/beach)
 "aA" = (
@@ -307,8 +307,8 @@
 /area/awaymission/beach)
 "aT" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	dir = 8;
-	icon_state = "sandwater_inner"
+	icon_state = "sandwater_inner";
+	dir = 8
 	},
 /area/awaymission/beach)
 "aU" = (
@@ -342,8 +342,8 @@
 /area/awaymission/beach)
 "aY" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 5;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 5
 	},
 /area/awaymission/beach)
 "aZ" = (
@@ -507,8 +507,8 @@
 /area/awaymission/beach)
 "bw" = (
 /turf/open/floor/plating/beach/coastline_b{
-	dir = 9;
-	icon_state = "sandwater_b"
+	icon_state = "sandwater_b";
+	dir = 9
 	},
 /area/awaymission/beach)
 "bx" = (

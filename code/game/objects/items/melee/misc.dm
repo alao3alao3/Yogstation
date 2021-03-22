@@ -1,6 +1,14 @@
 /obj/item/melee
 	item_flags = NEEDS_PERMIT
 
+/obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(target.check_block())
+		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
+					"<span class='userdanger'>You block the attack!</span>")
+		user.Stun(40)
+		return TRUE
+
+
 /obj/item/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
@@ -15,7 +23,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
-	materials = list(/datum/material/iron = 1000)
+	materials = list(MAT_METAL = 1000)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -57,21 +65,7 @@
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	materials = list(/datum/material/iron = 1000)
-
-/obj/item/melee/cutlass
-	name = "cutlass"
-	desc = "A true pirates weapon, seems somewhat dull though"
-	icon_state = "metalcutlass"
-	item_state = "metalcutlass"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 16
-	throwforce = 5
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("slashed", "cut")
-	hitsound = 'sound/weapons/rapierhit.ogg'
-	materials = list(/datum/material/iron = 1000)
+	materials = list(MAT_METAL = 1000)
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -179,15 +173,14 @@
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
-	var/cooldown = 3 SECONDS // Default wait time until can stun again.
-	var/knockdown_time_carbon = 1.5 SECONDS // Knockdown length for carbons.
-	var/stun_time_silicon = 5 SECONDS // If enabled, how long do we stun silicons.
-	var/stamina_damage = 55 // Do we deal stamina damage.
+	var/cooldown = 40 // Default wait time until can stun again.
+	var/stun_time_carbon = 60 // How long we stun for - 6 seconds.
+	var/stun_time_silicon = 0.60 // Multiplier for stunning silicons; if enabled, is 60% of human stun time.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
 	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
 	var/stun_animation = FALSE // Do we animate the "hit" when stunning.
-	var/on = TRUE // Are we on or off.
+	var/on = TRUE // Are we on or off
 
 	var/on_icon_state // What is our sprite when turned on
 	var/off_icon_state // What is our sprite when turned off
@@ -195,6 +188,12 @@
 	var/force_on // Damage when on - not stunning
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
+
+/obj/item/melee/classic_baton/Initialize()
+	. = ..()
+
+	// Derive stun time from multiplier.
+	stun_time_silicon = stun_time_carbon * stun_time_silicon
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
@@ -242,8 +241,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You hit yourself over the head.</span>")
-		user.Paralyze(knockdown_time_carbon * force)
-		user.adjustStaminaLoss(stamina_damage)
+		user.Paralyze(stun_time_carbon * force)
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -284,9 +282,7 @@
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 					return
-				var/datum/martial_art/M = H.check_block()
-				if(M)
-					M.handle_counter(target, user)
+				if(check_martial_counter(H, user))
 					return
 
 			var/list/desc = get_stun_description(target, user)
@@ -295,8 +291,7 @@
 				user.do_attack_animation(target)
 
 			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
-			target.Knockdown(knockdown_time_carbon)
-			target.adjustStaminaLoss(stamina_damage)
+			target.Paralyze(stun_time_carbon)
 			additional_effects_carbon(target, user)
 
 			log_combat(user, target, "stunned", src)
@@ -390,9 +385,9 @@
 	item_flags = NONE
 	force = 5
 
-	cooldown = 25
-	stamina_damage = 85
-	affect_silicon = TRUE
+	cooldown = 20
+	stun_time_carbon = 85 
+	affect_silicon = TRUE 
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 	stun_animation = TRUE
@@ -509,32 +504,6 @@
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
 
-/obj/item/melee/singularity_sword
-	name = "singularity sword"
-	desc = "Spins so hard that it turns any struck foe into mincemeat instantaneously. Make sure not to stick around when you swing it at someone."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "singularity_sword"
-	item_state = "singularity_sword"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = null
-	w_class = WEIGHT_CLASS_BULKY
-	force = 0
-	force_string = "INFINITE SPIN"
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/item/melee/singularity_sword/afterattack(target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && istype(target, /mob))
-		var/mob/M = target
-		var/turf/T = get_turf(M)
-		M.visible_message("<span class='danger'>[target] is consumed by the singularity!</span>")
-		new /obj/singularity(T)
-		M.gib()
-	else
-		return FALSE
-
-/// Simple whip that does additional damage(8 brute to be exact) to simple animals
 /obj/item/melee/curator_whip
 	name = "curator's whip"
 	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
@@ -543,16 +512,17 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	force = 12
+	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/whip.ogg'
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
 	. = ..()
-	if(isanimal(target) && proximity_flag)
-		var/mob/living/simple_animal/A = target
-		A.apply_damage(8, BRUTE)
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/H = target
+		H.drop_all_held_items()
+		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"

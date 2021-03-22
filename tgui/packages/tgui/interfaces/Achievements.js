@@ -5,8 +5,7 @@ import { Window } from '../layouts';
 export const Achievements = (props, context) => {
   const { data } = useBackend(context);
   return (
-    <Window width={540}
-      height={680}>
+    <Window>
       <Window.Content>
         {data.achievements.map(achievement => (
           <Collapsible

@@ -6,7 +6,7 @@ RSF
 ///Extracts the related object from a associated list of objects and values, or lists and objects.
 #define OBJECT_OR_LIST_ELEMENT(from, input) (islist(input) ? from[input] : input)
 /obj/item/rsf
-	name = "\improper Rapid Service Fabricator (RSF)"
+	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rsf" 	///The icon state to revert to when the tool is empty (thanks TG)
@@ -19,7 +19,7 @@ RSF
 	item_flags = NOBLUDGEON
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/matter = 0 	///The current matter count
-	var/max_matter = 50 	///The max amount of matter in the device
+	var/max_matter = 30 	///The max amount of matter in the device
 	var/to_dispense 	///The type of the object we are going to dispense
 	var/dispense_cost = 0 	///The cost of the object we are going to dispense
 	w_class = WEIGHT_CLASS_NORMAL
@@ -30,7 +30,9 @@ RSF
 								/obj/item/pen = 50,
 								/obj/item/clothing/mask/cigarette = 10,
 								)
-	var/list/allowed_surfaces = list(/obj/structure/table) 	///A list of surfaces that we are allowed to place things on.
+	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,) 	///An associated list of fuel and it's value
+	var/list/allowed_surfaces = list(/turf/open/floor, /obj/structure/table) 	///A list of surfaces that we are allowed to place things on.
+	var/discriptor = "fabrication-units" 	///The unit of mesure of the matter, for use in text
 	var/action_type = "Dispensing" 	///The verb that describes what we're doing, for use in text
 
 /obj/item/rsf/Initialize()
@@ -40,32 +42,24 @@ RSF
 
 /obj/item/rsf/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It currently holds [matter]/[max_matter] matter-units.</span>"
+	. += "<span class='notice'>It currently holds [matter]/[max_matter] [discriptor].</span>"
 
 /obj/item/rsf/cyborg
-	matter = 50
+	matter = 30
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
-	var/loaded = FALSE
-	if(istype(W, /obj/item/rcd_ammo))//If the thing we got hit by is in our matter list
-		var/tempMatter = matter + 10
+	if(is_type_in_list(W,matter_by_item))//If the thing we got hit by is in our matter list
+		var/tempMatter = matter_by_item[W.type] + matter
 		if(tempMatter > max_matter)
-			to_chat(user, "<span class='warning'>\The [src] can't hold any more matter-units!</span>")
+			to_chat(user, "<span class='warning'>\The [src] can't hold any more [discriptor]!</span>")
 			return
 		qdel(W)
 		matter = tempMatter //We add its value
-		loaded = TRUE
-
-	else if(istype(W, /obj/item/stack))
-		loaded = loadwithsheets(W, user)
-		
+		playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
+		icon_state = initial(icon_state)//and set the icon state to the initial value it had
 	else
 		return ..()
-
-	if(loaded)
-		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		icon_state = initial(icon_state)//and set the icon state to the initial value it had
-		playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 
 /obj/item/rsf/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -87,21 +81,6 @@ RSF
 	dispense_cost = cost
 	// Change mode
 
-/obj/item/rsf/proc/loadwithsheets(obj/item/stack/S, mob/user)
-	var/value = S.matter_amount
-	if(value <= 0)
-		to_chat(user, "<span class='notice'>You can't insert [S.name] into [src]!</span>")
-		return FALSE
-	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
-	if(maxsheets > 0)
-		var/amount_to_use = min(S.amount, maxsheets)
-		S.use(amount_to_use)
-		matter += value*amount_to_use
-		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into [src]. </span>")
-		return TRUE
-	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into [src]!</span>")
-	return FALSE
-
 ///Forms a radial menu based off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
 	var/list/radial_list = list()
@@ -120,7 +99,7 @@ RSF
 	. = ..()
 	if(!proximity)
 		return
-	if(!is_allowed(A, user))
+	if(!is_allowed(A))
 		return
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
@@ -140,20 +119,18 @@ RSF
 		return TRUE
 	else
 		if(matter - 1 < 0)
-			to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter-units left.</span>")
+			to_chat(user, "<span class='warning'>\The [src] doesn't have enough [discriptor] left.</span>")
 			icon_state = spent_icon_state
 			return FALSE
 		matter--
-		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] matter-units.</span>")
+		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
 		return TRUE
 
 ///Helper proc that iterates through all the things we are allowed to spawn on, and sees if the passed atom is one of them
-/obj/item/rsf/proc/is_allowed(atom/to_check, mob/user)
+/obj/item/rsf/proc/is_allowed(atom/to_check)
 	for(var/sort in allowed_surfaces)
 		if(istype(to_check, sort))
 			return TRUE
-
-	to_chat(user, "<span class='warning'>\The [src] is unable to place this here!</span>")
 	return FALSE
 
 /obj/item/rsf/cookiesynth
@@ -164,6 +141,7 @@ RSF
 	max_matter = 10
 	cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100)
 	dispense_cost = 100
+	discriptor = "cookie-units"
 	action_type = "Fabricating"
 	///Tracks whether or not the cookiesynth is about to print a poisoned cookie
 	var/toxin = FALSE //This might be better suited to some initialize fuckery, but I don't have a good "poisoned" sprite

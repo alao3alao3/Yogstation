@@ -100,7 +100,7 @@
 	if(..())
 		return
 	owner.transform = owner.transform.Scale(1, 1.25)
-	passtable_off(owner, GENETIC_MUTATION)
+	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 
@@ -234,19 +234,21 @@
 /datum/mutation/human/thickskin/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(owner.physiology)
+		brutemodbefore = owner.physiology.brute_mod
+		burnmodbefore = owner.physiology.burn_mod
 		owner.physiology.brute_mod *= 0.8
 		owner.physiology.burn_mod *= 0.9
 
 /datum/mutation/human/thickskin/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(owner.physiology)
-		owner.physiology.brute_mod /= 0.8
-		owner.physiology.burn_mod /= 0.9
+		owner.physiology.brute_mod = brutemodbefore
+		owner.physiology.burn_mod = burnmodbefore
 
 //Makes strong actually useful. Somewhat.
 /datum/mutation/human/strong
 	name = "Strength"
-	desc = "The user's muscles slightly expand, allowing them to move faster while carrying people."
+	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong!</span>"
 	text_lose_indication = "<span class='notice'>You feel fairly weak.</span>"

@@ -131,7 +131,3 @@
 	icon_state = "pod"
 	anchored = FALSE
 	density = FALSE
-
-/obj/structure/c_transit_tube_pod/cargo
-	name = "unattached cargo transit tube"
-	icon_state = "pod_cargo"

@@ -6,7 +6,7 @@
 #define RELEASING	1
 
 /obj/machinery/atmospherics/components/unary/vent_pump
-	icon_state = "vent_map-3"
+	icon_state = "vent_map-2"
 
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
@@ -16,8 +16,6 @@
 	welded = FALSE
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
-	shift_underlay_only = FALSE
-	showpipe = FALSE
 
 	var/id_tag = null
 	var/pump_direction = RELEASING
@@ -67,10 +65,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
+		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, piping_layer = piping_layer)
 		add_overlay(cap)
-	else
-		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(welded)
 		icon_state = "vent_welded"
@@ -131,14 +127,13 @@
 	var/environment_pressure = environment.return_pressure()
 	var/environment_moles = environment.total_moles()
 	var/last_moles_real_added = environment_moles - last_moles
-	if(!aac)
-		if((last_moles_added > 0 && environment_moles == 0 && space_detection) || (is_mining_level(z) && ISINRANGE(environment_moles, 36, 38)))
-			// looks like we have a S P A C E problem.
-			last_moles_added = 0
-			on = FALSE
-			space_shutoff_ticks = 20 // shut off for about 20 seconds before trying again.
-			update_icon()
-			return
+	if(last_moles_added > 0 && environment_moles == 0 && space_detection)
+		// looks like we have a S P A C E problem.
+		last_moles_added = 0
+		on = FALSE
+		space_shutoff_ticks = 20 // shut off for about 20 seconds before trying again.
+		update_icon()
+		return
 
 	if(pump_direction & RELEASING) // internal -> external
 		var/pressure_delta = 10000
@@ -176,7 +171,7 @@
 				moles_delta = min(moles_delta, (environment_pressure - external_pressure_bound) * environment.return_volume() / (environment.return_temperature() * R_IDEAL_GAS_EQUATION))
 			if(pressure_checks&INT_BOUND)
 				moles_delta = min(moles_delta, (internal_pressure_bound - air_contents.return_pressure()) * our_multiplier)
-
+		
 			if(moles_delta > 0)
 				var/datum/gas_mixture/removed = loc.remove_air(moles_delta)
 				if (isnull(removed)) // in space
@@ -361,27 +356,25 @@
 
 // mapping
 
-/obj/machinery/atmospherics/components/unary/vent_pump/layer2
-	piping_layer = 2
-	icon_state = "vent_map-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/layer1
+	piping_layer = 1
+	icon_state = "vent_map-1"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/layer4
-	piping_layer = 4
-	icon_state = "vent_map-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/layer3
+	piping_layer = 3
+	icon_state = "vent_map-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = TRUE
-	icon_state = "vent_map_on-3"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2
-	piping_layer = 2
 	icon_state = "vent_map_on-2"
-	showpipe = FALSE
 
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4
-	piping_layer = 4
-	icon_state = "vent_map_on-4"
-	showpipe = FALSE
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer1
+	piping_layer = 1
+	icon_state = "vent_map_on-1"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3
+	piping_layer = 3
+	icon_state = "vent_map_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = SIPHONING
@@ -389,30 +382,30 @@
 	internal_pressure_bound = 4000
 	external_pressure_bound = 0
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer2
-	piping_layer = 2
-	icon_state = "vent_map-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer1
+	piping_layer = 1
+	icon_state = "vent_map-1"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer4
-	piping_layer = 4
-	icon_state = "vent_map-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer3
+	piping_layer = 3
+	icon_state = "vent_map-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
 	on = TRUE
-	icon_state = "vent_map_siphon_on-3"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer2
-	piping_layer = 2
 	icon_state = "vent_map_siphon_on-2"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer4
-	piping_layer = 4
-	icon_state = "vent_map_siphon_on-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer1
+	piping_layer = 1
+	icon_state = "vent_map_siphon_on-1"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer3
+	piping_layer = 3
+	icon_state = "vent_map_siphon_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
 	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
-	icon_state = "vent_map_siphon_on-3"
+	icon_state = "vent_map_siphon_on-2"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
 	name = "plasma tank output inlet"
@@ -441,25 +434,25 @@
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
 	frequency = FREQ_ATMOS_CONTROL
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2
-	piping_layer = 2
-	icon_state = "vent_map-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer1
+	piping_layer = 1
+	icon_state = "vent_map-1"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer4
-	piping_layer = 4
-	icon_state = "vent_map-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer3
+	piping_layer = 3
+	icon_state = "vent_map-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
 	on = TRUE
-	icon_state = "vent_map_on-3"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer2
-	piping_layer = 2
 	icon_state = "vent_map_on-2"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer4
-	piping_layer = 4
-	icon_state = "map_vent_on-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer1
+	piping_layer = 1
+	icon_state = "vent_map_on-1"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer3
+	piping_layer = 3
+	icon_state = "map_vent_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
 	pump_direction = SIPHONING
@@ -467,30 +460,30 @@
 	internal_pressure_bound = 2000
 	external_pressure_bound = 0
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer2
-	piping_layer = 2
-	icon_state = "vent_map-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer1
+	piping_layer = 1
+	icon_state = "vent_map-1"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer4
-	piping_layer = 4
-	icon_state = "map_vent-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer3
+	piping_layer = 3
+	icon_state = "map_vent-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE
-	icon_state = "vent_map_siphon_on-3"
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer2
-	piping_layer = 2
 	icon_state = "vent_map_siphon_on-2"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer4
-	piping_layer = 4
-	icon_state = "vent_map_siphon_on-4"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer1
+	piping_layer = 1
+	icon_state = "vent_map_siphon_on-1"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer3
+	piping_layer = 3
+	icon_state = "vent_map_siphon_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
 	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
-	icon_state = "vent_map_siphon_on-3"
+	icon_state = "vent_map_siphon_on-2"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
 	name = "air mix tank output inlet"

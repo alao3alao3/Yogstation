@@ -10,6 +10,4 @@
 
 #define NANITE_PROGRAM_LIMIT 20
 
-#define NANITE_BASE_RESEARCH 3.5
-
 #define COMSIG_NANITE_DELETE "nanite_delete"

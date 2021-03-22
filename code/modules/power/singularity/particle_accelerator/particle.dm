@@ -63,8 +63,9 @@
 		return
 	if(!step(src,dir))
 		forceMove(get_step(src,dir))
+	movement_range--
 	if(movement_range == 0)
 		qdel(src)
-		return
-	movement_range--
-	addtimer(CALLBACK(src, .proc/move), speed)
+	else
+		sleep(speed)
+		move()

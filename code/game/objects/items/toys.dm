@@ -124,21 +124,6 @@
 	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/toy/mballoon
-	name = "toy mballoon"
-	desc = "A blue baloon, it looks.. mentory?"
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-	force = 0
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "mballoon"
-	item_state = "mballoon"
-	lefthand_file = 'icons/mob/inhands/antag/balloons_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-
-
 /obj/item/toy/syndicateballoon/pickup(mob/user)
 	. = ..()
 	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
@@ -180,7 +165,7 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(/datum/material/iron=10, /datum/material/glass=10)
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
@@ -219,7 +204,7 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
+		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
@@ -234,7 +219,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(/datum/material/iron=10, /datum/material/glass=10)
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon()
@@ -354,10 +339,11 @@
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
-	force_wielded = 0 // Why did someone make this a subtype of dualsabers
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	force_unwielded = 0
+	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -859,7 +845,7 @@
 		N.apply_card_vars(N,O)
 		qdel(src)
 		cardUser.put_in_hands(N)
-		cardUser.visible_message("[cardUser] also takes their last card and holds it.", "<span class='notice'>You also take [currenthand[1]] and hold it.</span>") //the outside world will now know when you break a 2 card hand into two separate cards. Useful for UNO but can be used by any card game
+		cardUser.visible_message("[cardUser] also takes their last card and holds it.", "<span class='notice'>You also take [currenthand[1]] and hold it.</span>")//the outside world will now know when you break a 2 card hand into two seperate cards. Useful for UNO but can be used by any card game
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
@@ -880,7 +866,7 @@
 			var/i
 			for(i=1, i<=C.currenthand.len, i++)
 				src.currenthand += C.currenthand[i] //adds all the cards from the other hand to this one
-			user.visible_message("[user] adds the cards from [user.p_their()] hand to another, consolidating them.", "<span class='notice'>You add the cards from one hand to another.</span>")
+			user.visible_message("[user] adds the cards from [user.p_their()] hand to another, consalidating them.", "<span class='notice'>You add the cards from one hand to another.</span>")
 			qdel(C)
 			interact(user)
 			update_icon()
@@ -1170,8 +1156,7 @@
 	desc = "A compact ball of snow. Good for throwing at people."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snowball"
-	throwforce = 20
-	damtype = STAMINA
+	throwforce = 12 //pelt your enemies to death with lumps of snow
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()
@@ -1181,9 +1166,6 @@
 /obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
-		if(isliving(hit_atom))
-			var/mob/living/L = hit_atom
-			L.apply_damage(20, STAMINA)
 		qdel(src)
 
 /*
@@ -1571,7 +1553,7 @@ obj/item/toy/turn_tracker
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language, list/message_mods)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
 	var/mob/M = A
 	if (istype(M))
 		M.log_talk(message, LOG_SAY, tag="dummy toy")

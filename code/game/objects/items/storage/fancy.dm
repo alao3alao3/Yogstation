@@ -113,10 +113,6 @@
 	spawn_type = /obj/item/candle
 	fancy_open = TRUE
 
-/obj/item/storage/box/fancy/candle_box/attack_self(mob_user)
-	. = ..()
-	update_icon()
-
 /obj/item/storage/box/fancy/candle_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)

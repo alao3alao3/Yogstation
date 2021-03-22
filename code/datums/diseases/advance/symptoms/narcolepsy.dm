@@ -32,12 +32,11 @@ Bonus
 	)
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalTransmittable() >= 7) //stamina damage
+	if(A.properties["transmittable"] >= 7) //stamina damage
 		stamina = TRUE
-	if(A.totalResistance() >= 10) //act more often
+	if(A.properties["resistance"] >= 10) //act more often
 		symptom_delay_min = 10
 		symptom_delay_max = 60
 
@@ -58,8 +57,7 @@ Bonus
 	else
 		sleep_level = 0
 
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 
 	switch(A.stage)

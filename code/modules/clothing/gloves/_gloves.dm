@@ -11,14 +11,12 @@
 	strip_delay = 20
 	equip_delay_other = 40
 
-/obj/item/clothing/gloves/wash(clean_types)
+/obj/item/clothing/gloves/ComponentInitialize()
 	. = ..()
-	if((clean_types & CLEAN_TYPE_BLOOD) && transfer_blood > 0)
-		transfer_blood = 0
-		return TRUE
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 
 /obj/item/clothing/gloves/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_TYPE_BLOOD)
+	if(strength < CLEAN_STRENGTH_BLOOD)
 		return
 	transfer_blood = 0
 

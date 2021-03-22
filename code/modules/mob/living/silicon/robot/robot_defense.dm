@@ -1,10 +1,3 @@
-/mob/living/silicon/robot/attack_robot(mob/user) // allowing for clicking people off like a chair
-	. = ..()
-	if(user == src && buckled_mobs?.len && user.a_intent == INTENT_HELP)
-		for(var/i in buckled_mobs)
-			var/mob/buckmob = i
-			unbuckle_mob(buckmob)
-
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(I.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(I, blacklisted_hats))
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
@@ -53,6 +46,7 @@
 		damage = rand(5, 35)
 	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
+	updatehealth()
 
 	return
 
@@ -134,9 +128,8 @@
 
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-	lawupdate = FALSE
-	set_connected_ai(null)
-
+	lawupdate = 0
+	connected_ai = null
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")

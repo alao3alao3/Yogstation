@@ -48,10 +48,6 @@
 				new material_drop_type(get_turf(src), drop_amt)
 	qdel(src)
 
-/obj/structure/statue/honk_act()
-	new /obj/structure/statue/bananium/clown(src.loc)
-	qdel(src)
-
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
@@ -263,9 +259,6 @@
 		spawn(20)
 			spam_flag = 0
 
-/obj/structure/statue/bananium/clown/honk_act()
-	return FALSE
-
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
@@ -324,11 +317,3 @@
 		icon_state = "cheesus2"
 		return ..()
 	return ..()
-
-/obj/structure/statue/elder_atmosian
-	name = "Elder Atmosian"
-	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
-	icon_state = "eng"
-	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
-	max_integrity = 1000
-	impressiveness = 100

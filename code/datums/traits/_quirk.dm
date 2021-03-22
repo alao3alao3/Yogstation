@@ -45,7 +45,6 @@
 	SSquirks.quirk_objects -= src
 	return ..()
 
-/// Used to transfer quicks from one mob to another
 /datum/quirk/proc/transfer_mob(mob/living/to_mob)
 	quirk_holder.roundstart_quirks -= src
 	to_mob.roundstart_quirks += src

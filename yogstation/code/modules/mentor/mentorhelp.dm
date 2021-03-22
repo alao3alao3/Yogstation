@@ -2,20 +2,17 @@
 	set category = "Mentor"
 	set name = "Mentorhelp"
 
+	if(is_mentor())
+		to_chat(src, "<span class='notice'>Mentors cannot mentorhelp, use msay instead!</span>", confidential=TRUE)
+		return
+
 	//clean the input msg
 	if(!msg)	return
 
-	//handle muting and automuting
-	if(prefs.muted & MUTE_MENTORHELP)
-		to_chat(src, "<span class='danger'>Error: Mentorhelp: You cannot send mentorhelps (Muted).</span>", confidential=TRUE)
-		return
-	if(handle_spam_prevention(msg,MUTE_MENTORHELP))
-		return
-
 	//remove out mentorhelp verb temporarily to prevent spamming of mentors.
-	remove_verb(src, /client/verb/mentorhelp)
+	verbs -= /client/verb/mentorhelp
 	spawn(300)
-		add_verb(src, /client/verb/mentorhelp)	// 30 second cool-down for mentorhelp
+		verbs += /client/verb/mentorhelp	// 30 second cool-down for mentorhelp
 
 	webhook_send_mhelp(key_name_mentor(src), msg)
 

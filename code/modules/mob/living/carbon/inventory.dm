@@ -147,8 +147,7 @@
   
   This handles creating an alert and adding an overlay to it
   */
-/mob/living/carbon/give()
-	. = ..()
+/mob/living/carbon/proc/give()
 	var/obj/item/receiving = get_active_held_item()
 	if(!receiving)
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")

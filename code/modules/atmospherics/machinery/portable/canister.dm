@@ -3,9 +3,12 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	desc = "A canister for the storage of gas."
-	icon = 'icons/obj/atmospherics/canister.dmi'
-	icon_state = "hazard"
+	icon_state = "yellow"
 	density = TRUE
+
+	ui_x = 405
+	ui_y = 230
+
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
@@ -35,11 +38,7 @@
 	req_access = list()
 
 	var/update = 0
-	//list of canister types for relabeling
 	var/static/list/label2types = list(
-		"generic" = /obj/machinery/portable_atmospherics/canister/generic,
-		"generic striped" = /obj/machinery/portable_atmospherics/canister/generic/stripe,
-		"generic hazard" = /obj/machinery/portable_atmospherics/canister/generic/hazard,
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -55,14 +54,7 @@
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
-		"dilithium" = /obj/machinery/portable_atmospherics/canister/dilithium,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
-		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
-		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
-		"pluonium" = /obj/machinery/portable_atmospherics/canister/pluonium,
-		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
-		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
-		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
+		"dilithium" = /obj/machinery/portable_atmospherics/canister/dilithium
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -72,96 +64,87 @@
 		return
 	..()
 
-/obj/machinery/portable_atmospherics/canister/generic
-	icon_state = "generic"
-
-/obj/machinery/portable_atmospherics/canister/generic/stripe
-	icon_state = "generic-stripe"
-
-/obj/machinery/portable_atmospherics/canister/generic/hazard
-	icon_state = "generic-hazard"
-
 /obj/machinery/portable_atmospherics/canister/nitrogen
-	name = "Nitrogen canister"
+	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
-	icon_state = "nitrogen"
+	icon_state = "red"
 	gas_type = /datum/gas/nitrogen
 
 /obj/machinery/portable_atmospherics/canister/oxygen
-	name = "Oxygen canister"
+	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
-	icon_state = "oxygen"
+	icon_state = "blue"
 	gas_type = /datum/gas/oxygen
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
-	name = "Carbon dioxide canister"
+	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
-	icon_state = "carbon"
+	icon_state = "black"
 	gas_type = /datum/gas/carbon_dioxide
 
 /obj/machinery/portable_atmospherics/canister/toxins
-	name = "Plasma canister"
+	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
-	icon_state = "plasma"
+	icon_state = "orange"
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
-	icon_state = "bz"
+	icon_state = "purple"
 	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
-	name = "Nitrous oxide canister"
+	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
-	icon_state = "nitrous"
+	icon_state = "redws"
 	gas_type = /datum/gas/nitrous_oxide
 
 /obj/machinery/portable_atmospherics/canister/air
-	name = "Air canister"
+	name = "air canister"
 	desc = "Pre-mixed air."
-	icon_state = "air"
+	icon_state = "grey"
 
 /obj/machinery/portable_atmospherics/canister/tritium
-	name = "Tritium canister"
+	name = "tritium canister"
 	desc = "Tritium. Inhalation might cause irradiation."
-	icon_state = "tritium"
+	icon_state = "green"
 	gas_type = /datum/gas/tritium
 
 /obj/machinery/portable_atmospherics/canister/nob
-	name = "Hyper-noblium canister"
+	name = "hyper-noblium canister"
 	desc = "Hyper-Noblium. More noble than all other gases."
-	icon_state = "hypno"
+	icon_state = "freon"
 	gas_type = /datum/gas/hypernoblium
 
 /obj/machinery/portable_atmospherics/canister/nitryl
-	name = "Nitryl canister"
+	name = "nitryl canister"
 	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
-	icon_state = "nitryl"
+	icon_state = "brown"
 	gas_type = /datum/gas/nitryl
 
 /obj/machinery/portable_atmospherics/canister/stimulum
-	name = "Stimulum canister"
+	name = "stimulum canister"
 	desc = "Stimulum. High energy gas, high energy people."
-	icon_state = "stimulum"
+	icon_state = "darkpurple"
 	gas_type = /datum/gas/stimulum
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
-	name = "Pluoxium canister"
+	name = "pluoxium canister"
 	desc = "Pluoxium. Like oxygen, but more bang for your buck."
-	icon_state = "pluoxium"
+	icon_state = "darkblue"
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
-	name = "Water vapor canister"
-	desc = "Water vapor. We get it, you vape."
-	icon_state = "water"
+	name = "water vapor canister"
+	desc = "Water Vapor. We get it, you vape."
+	icon_state = "water_vapor"
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/miasma
-	name = "Miasma canister"
-	desc = "Foul miasma. Even the canister reeks of fetid refuse."
+	name = "miasma canister"
+	desc = "Miasma. Makes you wish your nose were blocked."
 	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
 	filled = 1
@@ -169,57 +152,9 @@
 /obj/machinery/portable_atmospherics/canister/dilithium
 	name = "Dilithium canister"
 	desc = "A gas produced from dilithium crystal."
-	icon_state = "dilithium"
+	icon_state = "pink"
 	gas_type = /datum/gas/dilithium
 
-/obj/machinery/portable_atmospherics/canister/freon
-	name = "Freon canister"
-	desc = "Freon. Can absorb heat"
-	icon_state = "freon"
-	gas_type = /datum/gas/freon
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/hydrogen
-	name = "Hydrogen canister"
-	desc = "Hydrogen, highly flammable"
-	icon_state = "h2"
-	gas_type = /datum/gas/hydrogen
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/healium
-	name = "Healium canister"
-	desc = "Healium, causes deep sleep"
-	icon_state = "healium"
-	gas_type = /datum/gas/healium
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/pluonium
-	name = "Pluonium canister"
-	desc = "Pluonium, react differently with various gases"
-	icon_state = "pluonium"
-	gas_type = /datum/gas/pluonium
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/halon
-	name = "Halon canister"
-	desc = "Halon, remove oxygen from high temperature fires and cool down the area"
-	icon_state = "halon"
-	gas_type = /datum/gas/halon
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/hexane
-	name = "Hexane canister"
-	desc = "hexane, highly flammable."
-	icon_state = "hexane"
-	gas_type = /datum/gas/hexane
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/zauker
-	name = "Zauker canister"
-	desc = "Zauker, highly toxic"
-	icon_state = "zauker"
-	gas_type = /datum/gas/zauker
-	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -235,12 +170,13 @@
 
 /obj/machinery/portable_atmospherics/canister/proto
 	name = "prototype canister"
-	icon = 'icons/obj/atmos.dmi'
-	icon_state = "proto"
+
 
 /obj/machinery/portable_atmospherics/canister/proto/default
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
+	icon_state = "proto"
+	icon_state = "proto"
 	volume = 5000
 	max_integrity = 300
 	temperature_resistance = 2000 + T0C
@@ -248,12 +184,15 @@
 	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
 	prototype = TRUE
 
+
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen
 	name = "prototype canister"
 	desc = "A prototype canister for a prototype bike, what could go wrong?"
+	icon_state = "proto"
 	gas_type = /datum/gas/oxygen
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
+
 
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
@@ -265,10 +204,8 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
-	SSair.add_to_rebuild_queue(pump)
+	pump.build_network()
 
-/obj/machinery/portable_atmospherics/canister/Initialize()
-	. = ..()
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -290,20 +227,14 @@
 
 #define CANISTER_UPDATE_HOLDING		(1<<0)
 #define CANISTER_UPDATE_CONNECTED	(1<<1)
-#define CANISTER_UPDATE_OPEN		(1<<2)
-#define CANISTER_UPDATE_EMPTY		(1<<3)
-#define CANISTER_UPDATE_PRESSURE_0	(1<<4)
-#define CANISTER_UPDATE_PRESSURE_1	(1<<5)
-#define CANISTER_UPDATE_PRESSURE_2	(1<<6)
-#define CANISTER_UPDATE_PRESSURE_3	(1<<7)
-#define CANISTER_UPDATE_PRESSURE_4	(1<<8)
-#define CANISTER_UPDATE_PRESSURE_5	(1<<9)
-#define CANISTER_UPDATE_FULL		(1<<10)
-#define CANISTER_UPDATE_FUSION		(1<<11)
+#define CANISTER_UPDATE_EMPTY		(1<<2)
+#define CANISTER_UPDATE_LOW			(1<<3)
+#define CANISTER_UPDATE_MEDIUM		(1<<4)
+#define CANISTER_UPDATE_FULL		(1<<5)
+#define CANISTER_UPDATE_DANGER		(1<<6)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
-		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		icon_state = "[icon_state]-1"
 		return
 
@@ -314,87 +245,50 @@
 		update |= CANISTER_UPDATE_HOLDING
 	if(connected_port)
 		update |= CANISTER_UPDATE_CONNECTED
-	if(valve_open)
-		update |= CANISTER_UPDATE_OPEN
-	if(!air_contents)
+	var/pressure = air_contents.return_pressure()
+	if(pressure < 10)
 		update |= CANISTER_UPDATE_EMPTY
+	else if(pressure < 5 * ONE_ATMOSPHERE)
+		update |= CANISTER_UPDATE_LOW
+	else if(pressure < 10 * ONE_ATMOSPHERE)
+		update |= CANISTER_UPDATE_MEDIUM
+	else if(pressure < 40 * ONE_ATMOSPHERE)
+		update |= CANISTER_UPDATE_FULL
 	else
-		var/pressure = air_contents.return_pressure()
-		if(pressure < 10)
-			update |= CANISTER_UPDATE_EMPTY
-		else if(pressure < ONE_ATMOSPHERE)
-			update |= CANISTER_UPDATE_PRESSURE_0
-		else if(pressure < 5 * ONE_ATMOSPHERE)
-			update |= CANISTER_UPDATE_PRESSURE_1
-		else if(pressure < 10 * ONE_ATMOSPHERE)
-			update |= CANISTER_UPDATE_PRESSURE_2
-		else if(pressure < 20 * ONE_ATMOSPHERE)
-			update |= CANISTER_UPDATE_PRESSURE_3
-		else if(pressure < 30 * ONE_ATMOSPHERE)
-			update |= CANISTER_UPDATE_PRESSURE_4
-		else if(pressure < 40 * ONE_ATMOSPHERE) //pressure pump max
-			update |= CANISTER_UPDATE_PRESSURE_5
-		else if(pressure < 9100) //volume pump max
-			update |= CANISTER_UPDATE_FULL
-		else
-			update |= CANISTER_UPDATE_FUSION
+		update |= CANISTER_UPDATE_DANGER
 
 	if(update == last_update)
 		return
 
 	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	set_light(FALSE)
-	if(update & CANISTER_UPDATE_OPEN)
-		add_overlay("can-open")
 	if(update & CANISTER_UPDATE_HOLDING)
-		add_overlay("can-tank")
+		add_overlay("can-open")
 	if(update & CANISTER_UPDATE_CONNECTED)
 		add_overlay("can-connector")
-	if(update & CANISTER_UPDATE_PRESSURE_0)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o0", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o0", layer, EMISSIVE_PLANE, dir)
+	if(update & CANISTER_UPDATE_LOW)
+		var/mutable_appearance/indicator_overlay = mutable_appearance(icon, "can-o0", ABOVE_LIGHTING_LAYER)
+		add_overlay(indicator_overlay)
 		set_light(1.4, 1, COLOR_RED_LIGHT)
-	else if(update & CANISTER_UPDATE_PRESSURE_1)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o1", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o1", layer, EMISSIVE_PLANE, dir)
+	else if(update & CANISTER_UPDATE_MEDIUM)
+		var/mutable_appearance/indicator_overlay = mutable_appearance(icon, "can-o1", ABOVE_LIGHTING_LAYER)
+		add_overlay(indicator_overlay)
 		set_light(1.4, 1, COLOR_RED_LIGHT)
-	else if(update & CANISTER_UPDATE_PRESSURE_2)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o2", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o2", layer, EMISSIVE_PLANE, dir)
-		set_light(1.4, 1, COLOR_ORANGE)
-	else if(update & CANISTER_UPDATE_PRESSURE_3)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o3", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o3", layer, EMISSIVE_PLANE, dir)
-		set_light(1.4, 1, COLOR_ORANGE)
-	else if(update & CANISTER_UPDATE_PRESSURE_4)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o4", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o4", layer, EMISSIVE_PLANE, dir)
-		set_light(1.4, 1, COLOR_YELLOW)
-	else if(update & CANISTER_UPDATE_PRESSURE_5)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o5", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o5", layer, EMISSIVE_PLANE, dir)
-		set_light(1.4, 1, COLOR_LIME)
 	else if(update & CANISTER_UPDATE_FULL)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o6", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-o6", layer, EMISSIVE_PLANE, dir)
-		set_light(1.4, 1, COLOR_GREEN)
-	else if(update & CANISTER_UPDATE_FUSION)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-oF", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "can-oF", layer, EMISSIVE_PLANE, dir)
-		set_light(2, 2, COLOR_WHITE)
+		var/mutable_appearance/indicator_overlay = mutable_appearance(icon, "can-o2", ABOVE_LIGHTING_LAYER)
+		add_overlay(indicator_overlay)
+		set_light(1.4, 1, COLOR_YELLOW)
+	else if(update & CANISTER_UPDATE_DANGER)
+		var/mutable_appearance/indicator_overlay = mutable_appearance(icon, "can-o3", ABOVE_LIGHTING_LAYER)
+		add_overlay(indicator_overlay)
+		set_light(1.4, 1, COLOR_LIME)
 #undef CANISTER_UPDATE_HOLDING
 #undef CANISTER_UPDATE_CONNECTED
-#undef CANISTER_UPDATE_OPEN
 #undef CANISTER_UPDATE_EMPTY
-#undef CANISTER_UPDATE_PRESSURE_0
-#undef CANISTER_UPDATE_PRESSURE_1
-#undef CANISTER_UPDATE_PRESSURE_2
-#undef CANISTER_UPDATE_PRESSURE_3
-#undef CANISTER_UPDATE_PRESSURE_4
-#undef CANISTER_UPDATE_PRESSURE_5
+#undef CANISTER_UPDATE_LOW
+#undef CANISTER_UPDATE_MEDIUM
 #undef CANISTER_UPDATE_FULL
-#undef CANISTER_UPDATE_FUSION
+#undef CANISTER_UPDATE_DANGER
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -480,13 +374,11 @@
 
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
-	return GLOB.physical_state
-
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, "Canister", name)
+		ui = new(user, src, ui_key, "Canister", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()
@@ -616,64 +508,3 @@
 	if(istype(user))
 		analyzer_act(user, src)
 	return ..()
-
-/* yog- ADMEME CANISTERS */
-
-/// Canister 1 Kelvin below the fusion point. Is highly unoptimal, do not spawn to start fusion, only good for testing low instability mixes.
-/obj/machinery/portable_atmospherics/canister/fusion_test
-	name = "Fusion Test Canister"
-	desc = "This should never be spawned in game."
-	icon_state = "danger"
-/obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.set_moles(/datum/gas/tritium, 10)
-	air_contents.set_moles(/datum/gas/plasma, 500)
-	air_contents.set_moles(/datum/gas/hydrogen, 500)
-	air_contents.set_moles(/datum/gas/nitrous_oxide, 100)
-	air_contents.set_temperature(10000)
-
-/// Canister 1 Kelvin below the fusion point. Contains far too much plasma. Only good for adding more fuel to ongoing fusion reactions.
- /obj/machinery/portable_atmospherics/canister/fusion_test_2
-	name = "Fusion Test Canister"
-	desc = "This should never be spawned in game."
-	icon_state = "danger"
-/obj/machinery/portable_atmospherics/canister/fusion_test_2/create_gas()
-	air_contents.set_moles(/datum/gas/tritium, 10)
-	air_contents.set_moles(/datum/gas/plasma, 15000)
-	air_contents.set_moles(/datum/gas/carbon_dioxide, 1500)
-	air_contents.set_moles(/datum/gas/nitrous_oxide, 100)
-	air_contents.set_temperature(9999)
-
-/// Canister at the perfect conditions to start and continue fusion for a long time.
-/obj/machinery/portable_atmospherics/canister/fusion_test_3
-	name = "Fusion Test Canister"
-	desc = "This should never be spawned in game."
-	icon_state = "danger"
-/obj/machinery/portable_atmospherics/canister/fusion_test_3/create_gas()
-	air_contents.set_moles(/datum/gas/tritium, 1000)
-	air_contents.set_moles(/datum/gas/plasma, 4500)
-	air_contents.set_moles(/datum/gas/carbon_dioxide, 1500)
-	air_contents.set_temperature(1000000)
-
-/** Canister for testing dilithium based cold fusion. Use fusion_test_3 if you don't know what you are doing.
- This canister is significantly harder to fix if shit goes wrong.*/
-/obj/machinery/portable_atmospherics/canister/fusion_test_4
-	name = "Cold Fusion Test Canister"
-	desc = "This should never be spawned in game. Contains dilithium for cold fusion."
-	icon_state = "danger"
-/obj/machinery/portable_atmospherics/canister/fusion_test_4/create_gas()
-	air_contents.set_moles(/datum/gas/tritium, 1000)
-	air_contents.set_moles(/datum/gas/plasma, 4500)
-	air_contents.set_moles(/datum/gas/carbon_dioxide, 1500)
-	air_contents.set_moles(/datum/gas/dilithium, 2000)
-	air_contents.set_temperature(10000)
-
-/// A canister that is 1 Kelvin away from doing the stimball reaction.
-/obj/machinery/portable_atmospherics/canister/stimball_test
-	name = "Stimball Test Canister"
-	desc = "This should never be spawned in game except for testing purposes."
-	icon_state = "danger"
-/obj/machinery/portable_atmospherics/canister/stimball_test/create_gas()
-	air_contents.set_moles(/datum/gas/stimulum, 1000)
-	air_contents.set_moles(/datum/gas/plasma, 1000)
-	air_contents.set_moles(/datum/gas/pluoxium, 1000)
-	air_contents.set_temperature(FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1)

@@ -69,6 +69,8 @@
 	var/const/staring_seed_multiplier = 1
 	var/max_seeds = staring_max_seeds
 	var/seed_multiplier = staring_seed_multiplier
+	ui_x = 1000
+	ui_y = 400
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -79,7 +81,7 @@
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.</span>"
+		. += "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.</span>"
 
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
 
@@ -115,6 +117,7 @@
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
+			updateUsrDialog()
 		return
 	else if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
@@ -163,13 +166,11 @@
 
 	. = TRUE
 
-/obj/machinery/seed_extractor/ui_state(mob/user)
-	return GLOB.notcontained_state
-
-/obj/machinery/seed_extractor/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
+/obj/machinery/seed_extractor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, "SeedExtractor", name)
+		ui = new(user, src, ui_key, "SeedExtractor", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/seed_extractor/ui_data()

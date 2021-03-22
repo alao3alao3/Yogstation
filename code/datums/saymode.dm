@@ -110,7 +110,7 @@
 
 
 /datum/saymode/holopad
-	key = MODE_KEY_HOLOPAD
+	key = "h"
 	mode = MODE_HOLOPAD
 
 /datum/saymode/holopad/handle_message(mob/living/user, message, datum/language/language)
@@ -121,7 +121,7 @@
 	return TRUE
 
 /datum/saymode/monkey
-	key = MODE_KEY_MONKEY
+	key = "k"
 	mode = MODE_MONKEY
 
 /datum/saymode/monkey/handle_message(mob/living/user, message, datum/language/language)
@@ -143,7 +143,7 @@
 		return FALSE
 
 /datum/saymode/darkspawn //yogs: darkspawn
-	key = MODE_KEY_DARKSPAWN
+	key = "k"
 	mode = MODE_DARKSPAWN
 
 /datum/saymode/darkspawn/handle_message(mob/living/user, message, datum/language/language)

@@ -1,55 +1,51 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, Flex, LabeledList, ProgressBar, Section } from '../components';
-import { NtosWindow } from '../layouts';
 
 const getMuleByRef = (mules, ref) => {
   return mules?.find(mule => mule.mule_ref === ref);
 };
 
-export const NtosRoboControl = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosRoboControl = props => {
+  const { state } = props;
+  const { act, data } = useBackend(props);
   const {
     bots,
     id_owner,
     has_id,
   } = data;
   return (
-    <NtosWindow
-      width={550}
-      height={550}
-      resizable>
-      <NtosWindow.Content scrollable>
-        <Section title="Robot Control Console">
-          <LabeledList>
-            <LabeledList.Item label="Id Card">
-              {id_owner}
-              {!!has_id && (
-                <Button
-                  ml={2}
-                  icon="eject"
-                  content="Eject"
-                  onClick={() => act('ejectcard')} />
-              )}
-            </LabeledList.Item>
-            <LabeledList.Item label="Bots in range">
-              {data.botcount}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-        {bots?.map(robot => (
-          <RobotInfo
-            key={robot.bot_ref}
-            robot={robot} />
-        ))}
-      </NtosWindow.Content>
-    </NtosWindow>
+    <Fragment>
+      <Section title="Robot Control Console">
+        <LabeledList>
+          <LabeledList.Item label="Id Card">
+            {id_owner}
+            {!!has_id && (
+              <Button
+                ml={2}
+                icon="eject"
+                content="Eject"
+                onClick={() => act('ejectcard')} />
+            )}
+          </LabeledList.Item>
+          <LabeledList.Item label="Bots in range">
+            {data.botcount}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+      {bots?.map(robot => (
+        <RobotInfo
+          key={robot.bot_ref}
+          state={state}
+          robot={robot} />
+      ))}
+    </Fragment>
   );
 };
 
-const RobotInfo = (props, context) => {
+const RobotInfo = props => {
   const { robot } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend(props);
   const mules = data.mules || [];
   // Get a mule object
   const mule = !!robot.mule_check

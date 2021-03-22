@@ -108,15 +108,16 @@
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
 	timeleft = 0
-	var/list/warp_points = list()
+	var/list/warp_points
+
+/obj/effect/forcefield/arena_shuttle/Initialize()
+	. = ..()
+	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
+		warp_points += exit
 
 /obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
-
-	if(!warp_points.len)
-		for(var/obj/effect/landmark/shuttle_arena_safe/S in GLOB.landmarks_list)
-			warp_points |= S
 
 	var/mob/living/L = AM
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
@@ -163,6 +164,6 @@
 
 
 /area/shuttle_arena
-	name = "The Arena"
+	name = "arena"
 	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

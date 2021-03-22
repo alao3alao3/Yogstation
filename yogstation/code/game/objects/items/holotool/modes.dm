@@ -19,10 +19,6 @@
 
 ////////////////////////////////////////////////
 
-/datum/holotool_mode/off
-	name = "off"
-	sound = 'yogstation/sound/items/holotool.ogg'
-
 /datum/holotool_mode/screwdriver
 	name = "holo-screwdriver"
 	sound = 'yogstation/sound/items/holotool.ogg'

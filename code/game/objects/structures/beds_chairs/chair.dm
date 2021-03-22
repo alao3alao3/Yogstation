@@ -70,11 +70,6 @@
 	B.setDir(dir)
 	qdel(src)
 
-/obj/structure/chair/honk_act()
-	var/obj/structure/chair/bananium/A = new(get_turf(src))
-	A.setDir(dir)
-	qdel(src)
-
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
@@ -270,7 +265,7 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	materials = list(/datum/material/iron = 2000)
+	materials = list(MAT_METAL = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -311,7 +306,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(materials[/datum/material/iron])
+	else if(materials[MAT_METAL])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 

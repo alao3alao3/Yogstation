@@ -3,9 +3,6 @@
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
-	use_slime_core(holder)
-
-/datum/chemical_reaction/slime/proc/use_slime_core(datum/reagents/holder)
 	SSblackbox.record_feedback("tally", "slime_cores_used", 1, "type")
 	if(deletes_extract)
 		delete_extract(holder)
@@ -401,7 +398,13 @@
 	required_other = TRUE
 // yogs start
 /datum/chemical_reaction/slime/slimespeed/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/speed(get_turf(holder.my_atom))
+	if(prob(1))
+		explosion(get_turf(holder.my_atom), 1 ,3, 6)
+		return
+	if(prob(50))
+		new /mob/living/simple_animal/pet/gondola/gondolapod(get_turf(holder.my_atom))
+	else
+		new /obj/item/slimepotion/speed(get_turf(holder.my_atom))
 	..()
 // yogs end
 
@@ -464,7 +467,7 @@
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
-		explosion(get_turf(holder.my_atom), 0 ,4, 8)
+		explosion(get_turf(holder.my_atom), 1 ,3, 6)
 
 
 /datum/chemical_reaction/slime/slimecornoil
@@ -579,9 +582,7 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
-	addtimer(CALLBACK(src, .proc/slime_stop, holder), 5 SECONDS)
-
-/datum/chemical_reaction/slime/slimestop/proc/slime_stop(datum/reagents/holder)
+	sleep(50)
 	var/obj/item/slime_extract/sepia/extract = holder.my_atom
 	var/turf/T = get_turf(holder.my_atom)
 	new /obj/effect/timestop(T, null, null, null)
@@ -591,7 +592,7 @@
 			if(lastheld && !lastheld.equip_to_slot_if_possible(extract, SLOT_HANDS, disable_warning = TRUE))
 				extract.forceMove(get_turf(lastheld))
 
-	use_slime_core(holder)
+	..()
 
 /datum/chemical_reaction/slime/slimecamera
 	name = "Slime Camera"

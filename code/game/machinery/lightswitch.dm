@@ -2,13 +2,9 @@
 /obj/machinery/light_switch
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light-p"
+	icon_state = "light1"
 	desc = "Make dark."
 	power_channel = LIGHT
-
-	light_power = 0
-	light_range = 7
-
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null
@@ -28,12 +24,13 @@
 	update_icon()
 
 /obj/machinery/light_switch/update_icon()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(!(stat & NOPOWER))
+	if(stat & NOPOWER)
+		icon_state = "light-p"
+	else
 		if(area.lightswitch)
-			SSvis_overlays.add_vis_overlay(src, icon, "light1", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+			icon_state = "light1"
 		else
-			SSvis_overlays.add_vis_overlay(src, icon, "light0", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+			icon_state = "light0"
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()

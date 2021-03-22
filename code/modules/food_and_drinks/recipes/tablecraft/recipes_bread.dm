@@ -56,7 +56,7 @@
 
 /datum/crafting_recipe/food/garlicbread
 	name = "Garlic Bread"
-	time = 4 SECONDS
+	time = 40
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 1,
 				/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
 				/obj/item/reagent_containers/food/snacks/butter = 1

@@ -24,46 +24,35 @@
 #define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += list(V);
 #define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 
-/// Passed into BINARY_INSERT to compare keys
-#define COMPARE_KEY __BIN_LIST[__BIN_MID]
-/// Passed into BINARY_INSERT to compare values
-#define COMPARE_VALUE __BIN_LIST[__BIN_LIST[__BIN_MID]]
-
-/****
-	* Binary search sorted insert
-	* INPUT: Object to be inserted
-	* LIST: List to insert object into
-	* TYPECONT: The typepath of the contents of the list
-	* COMPARE: The object to compare against, usualy the same as INPUT
-	* COMPARISON: The variable on the objects to compare
-	*/
-#define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
-	do {\
-		var/list/__BIN_LIST = LIST;\
-		var/__BIN_CTTL = length(__BIN_LIST);\
-		if(!__BIN_CTTL) {\
-			__BIN_LIST += INPUT;\
-		} else {\
-			var/__BIN_LEFT = 1;\
-			var/__BIN_RIGHT = __BIN_CTTL;\
-			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			var/##TYPECONT/__BIN_ITEM;\
-			while(__BIN_LEFT < __BIN_RIGHT) {\
-				__BIN_ITEM = COMPTYPE;\
-				if(__BIN_ITEM.##COMPARISON <= COMPARE.##COMPARISON) {\
-					__BIN_LEFT = __BIN_MID + 1;\
-				} else {\
-					__BIN_RIGHT = __BIN_MID;\
-				};\
-				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+// binary search sorted insert
+// IN: Object to be inserted
+// LIST: List to insert object into
+// TYPECONT: The typepath of the contents of the list
+// COMPARE: The variable on the objects to compare
+#define BINARY_INSERT(IN, LIST, TYPECONT, COMPARE) \
+	var/__BIN_CTTL = length(LIST);\
+	if(!__BIN_CTTL) {\
+		LIST += IN;\
+	} else {\
+		var/__BIN_LEFT = 1;\
+		var/__BIN_RIGHT = __BIN_CTTL;\
+		var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+		var/##TYPECONT/__BIN_ITEM;\
+		while(__BIN_LEFT < __BIN_RIGHT) {\
+			__BIN_ITEM = LIST[__BIN_MID];\
+			if(__BIN_ITEM.##COMPARE <= IN.##COMPARE) {\
+				__BIN_LEFT = __BIN_MID + 1;\
+			} else {\
+				__BIN_RIGHT = __BIN_MID;\
 			};\
-			__BIN_ITEM = COMPTYPE;\
-			__BIN_MID = __BIN_ITEM.##COMPARISON > COMPARE.##COMPARISON ? __BIN_MID : __BIN_MID + 1;\
-			__BIN_LIST.Insert(__BIN_MID, INPUT);\
+			__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
 		};\
-	} while(FALSE)
+		__BIN_ITEM = LIST[__BIN_MID];\
+		__BIN_MID = __BIN_ITEM.##COMPARE > IN.##COMPARE ? __BIN_MID : __BIN_MID + 1;\
+		LIST.Insert(__BIN_MID, IN);\
+	}
 
-/// Returns a list in plain english as a string
+//Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
@@ -84,7 +73,7 @@
 
 		return "[output][and_text][input[index]]"
 
-/// Returns list element or null. Should prevent "index out of bounds" error.
+//Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
 	if(LAZYLEN(L))
 		if(isnum(index) && ISINTEGER(index))
@@ -94,18 +83,18 @@
 			return L[index]
 	return
 
-/// Return either pick(list) or null if list is not of type /list or is empty
+//Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
 	if(LAZYLEN(L))
 		return pick(L)
 
-/// Checks if the list is empty
+//Checks if the list is empty
 /proc/isemptylist(list/L)
 	if(!L.len)
 		return TRUE
 	return FALSE
 
-/// Checks for specific types in a list
+//Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
 	if(!LAZYLEN(L) || !A)
 		return FALSE
@@ -114,10 +103,10 @@
 			return TRUE
 	return FALSE
 
-/// Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
+//Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 #define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
-/// Checks for a string in a list
+//Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
 	if(!LAZYLEN(L) || !string)
 		return
@@ -126,7 +115,7 @@
 			return TRUE
 	return
 
-/// Removes a string from a list
+//Removes a string from a list
 /proc/remove_strings_from_list(string, list/L)
 	if(!LAZYLEN(L) || !string)
 		return
@@ -135,7 +124,7 @@
 			L -= V //No return here so that it removes all strings of that type
 	return
 
-/// returns a new list with only atoms that are in typecache L
+//returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
@@ -144,7 +133,6 @@
 		if (typecache[A.type])
 			. += A
 
-/// returns a new list with only atoms that are not in typecache L
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
@@ -160,7 +148,7 @@
 		if(typecache_include[A.type] && !typecache_exclude[A.type])
 			. += A
 
-/// Like typesof() or subtypesof(), but returns a typecache instead of a list
+//Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
 		var/list/types = list()
@@ -188,7 +176,7 @@
 						L[T] = TRUE
 		return L
 
-/// Empties the list by setting the length to 0. Hopefully the elements get garbage collected
+//Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
 	if(istype(list))
 		list.len = 0
@@ -271,7 +259,7 @@
 
 	return null
 
-/// Pick a random element from the list and remove it from the list.
+//Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
 	RETURN_TYPE(L[_].type)
 	if(L.len)
@@ -279,13 +267,12 @@
 		. = L[picked]
 		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
 
-/// Returns the top(last) element from the list and removes it from the list (typical stack function)
+//Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
 	if(L.len)
 		. = L[L.len]
 		L.len--
 
-/// Returns the bottom(first) element from the list and removes it from the list (typical stack function)
 /proc/popleft(list/L)
 	if(L.len)
 		. = L[1]
@@ -297,7 +284,7 @@
 		pos--
 	L.Insert(pos+1, thing)
 
-/// Returns the next item in a list
+// Returns the next item in a list
 /proc/next_list_item(item, list/L)
 	var/i
 	i = L.Find(item)
@@ -307,7 +294,7 @@
 		i++
 	return L[i]
 
-/// Returns the previous item in a list
+// Returns the previous item in a list
 /proc/previous_list_item(item, list/L)
 	var/i
 	i = L.Find(item)
@@ -317,7 +304,7 @@
 		i--
 	return L[i]
 
-/// Randomize: Return the list in a random order
+//Randomize: Return the list in a random order
 /proc/shuffle(list/L)
 	if(!L)
 		return
@@ -328,7 +315,7 @@
 
 	return L
 
-/// Same as shuffle, but returns nothing and acts on list in place
+//same, but returns nothing and acts on list in place
 /proc/shuffle_inplace(list/L)
 	if(!L)
 		return
@@ -336,7 +323,7 @@
 	for(var/i=1, i<L.len, ++i)
 		L.Swap(i,rand(i,L.len))
 
-/// Returns a list without duplicate entrys
+//Return a list with no duplicate entries
 /proc/uniqueList(list/L)
 	. = list()
 	for(var/i in L)
@@ -352,11 +339,11 @@
 		else
 			L[key] = temp[key]
 
-/// Sort a list by CKEY
+//for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
 	return sortTim(L, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
 
-/// Sort datum records in a list
+//Specifically for record datums in a list.
 /proc/sortRecord(list/L, field = "name", order = 1)
 	GLOB.cmp_field = field
 	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
@@ -370,7 +357,7 @@
 	return sortTim(L, order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
 
-/// Converts a bitfield to a list of numbers (or words if a wordlist is provided)
+//Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield2list(bitfield = 0, list/wordlist)
 	var/list/r = list()
 	if(islist(wordlist))
@@ -387,7 +374,7 @@
 
 	return r
 
-/// Returns the key based on the index
+// Returns the key based on the index
 #define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
@@ -397,7 +384,6 @@
 			i++
 	return i
 
-/// Find a datum record from a list
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
@@ -496,7 +482,7 @@
 			if(D.vars[varname] == value)
 				return D
 
-/// remove all nulls from a list
+//remove all nulls from a list
 /proc/removeNullsFromList(list/L)
 	while(L.Remove(null))
 		continue

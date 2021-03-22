@@ -5,12 +5,6 @@
 "b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"c" = (
-/obj/machinery/vending/hydronutrients{
-	onstation = 0
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/seedvault)
 "d" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -139,9 +133,11 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "v" = (
-/obj/machinery/vending/hydroseeds{
-	onstation = 0
-	},
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"w" = (
+/obj/machinery/vending/hydroseeds,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "x" = (
@@ -440,7 +436,7 @@ h
 l
 h
 h
-c
+v
 h
 h
 B
@@ -484,7 +480,7 @@ h
 Q
 p
 h
-v
+w
 h
 h
 D

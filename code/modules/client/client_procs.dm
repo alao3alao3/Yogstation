@@ -1,9 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		524288	//Restricts client uploads to the server to 0.5MB
-#define UPLOAD_LIMIT_ADMIN	3145728	//Restricts admin client uploads to the server to 3MB
-
+#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
@@ -73,7 +71,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			keyUp(keyup)
 		return
 
-	//Rate limiting
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
 		var/minute = round(world.time, 600)
@@ -106,15 +103,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	// Tgui Topic middleware
-	if(tgui_Topic(href_list))
-		return
-	if(href_list["reload_tguipanel"])
-		nuke_chat()
-	if(href_list["reload_statbrowser"])
-		src << browse(file('html/statbrowser.html'), "window=statbrowser")
-	// Log all hrefs
-	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+	//Logs all hrefs, except chat pings
+	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
+		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	//byond bug ID:2256651
 	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
@@ -149,6 +140,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
+		if("chat")
+			return chatOutput.Topic(href, href_list)
 
 	switch(href_list["action"])
 		if("openLink")
@@ -159,59 +152,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	..()	//redirect to hsrc.Topic()
-
-/client/proc/do_discord_link(hash)
-	if(!CONFIG_GET(flag/sql_enabled))
-		alert(src, "Discord account linking requires the SQL backend to be running.")
-		winset(src, null, "command=.reconnect")
-		return
-
-	if(!SSdiscord)
-		alert(src, "The server is still starting, please try again later.")
-		winset(src, null, "command=.reconnect")
-		return
-
-	var/stored_id = SSdiscord.lookup_id(ckey)
-	if(stored_id)
-		alert(src, "You already have the Discord Account [stored_id] linked to [ckey]. If you need to have this reset, please contact an admin!","Already Linked")
-		winset(src, null, "command=.reconnect")
-		return
-
-	//The hash is directly appended to the request URL, this is to prevent exploits in URL parsing with funny urls
-	// such as http://localhost/stuff:user@google.com/ so we restrict the valid characters to all numbers and the letters from a to f
-	if(regex(@"[^\da-fA-F]").Find(hash))
-		alert(src, "Invalid hash \"[hash]\"")
-		winset(src, null, "command=.reconnect")
-		return
-
-	//Since this action is passive as in its executed as you login, we need to make sure the user didnt just click on some random link and he actually wants to link
-	var/res = input(src, "You are about to link your BYOND and Discord account. Do not proceed if you did not initiate the linking process. Input 'proceed' and press ok to proceed") as text|null
-	if(lowertext(res) != "proceed")
-		alert(src, "Linking process aborted")
-		//Reconnecting clears out the connection parameters, this is so the user doesn't get the prompt to link their account if they later click replay
-		winset(src, null, "command=.reconnect")
-		return
-
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/webhook_address)]?key=[CONFIG_GET(string/webhook_key)]&method=verify&data=[json_encode(list("ckey" = ckey, "hash" = hash))]")
-	request.begin_async()
-	UNTIL(request.is_complete() || !src)
-	if(!src)
-		return
-	var/datum/http_response/response = request.into_response()
-	var/data = json_decode(response.body)
-	if(istext(data["response"]))
-		alert(src,"Internal Server Error")
-		winset(src, null, "command=.reconnect")
-		return
-
-	if(data["response"]["status"] == "err")
-		alert(src, "Could not link account: [data["response"]["message"]]")
-	else
-		SSdiscord.link_account(ckey, data["response"]["message"])
-		alert(src, "Linked to account [data["response"]["message"]]")
-	winset(src, null, "command=.reconnect")
-
 
 /client/proc/is_content_unlocked()
 	if(!is_donator(src)) // yogs - changed this to is_donator so admins get donor perks
@@ -257,11 +197,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
-	if (holder)
-		if(filelength > UPLOAD_LIMIT_ADMIN)
-			to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT_ADMIN/1024]KiB.</font>")
-			return FALSE
-	else if(filelength > UPLOAD_LIMIT)
+	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
 	return 1
@@ -270,6 +206,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 	//CONNECT//
 	///////////
+#if (PRELOAD_RSC == 0)
+GLOBAL_LIST_EMPTY(external_rsc_urls)
+#endif
 
 /client/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
@@ -277,9 +216,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
-	//this is a scam, so sometimes the topicdata is set to /?key=value instead of key=value, this is a hack around that
-	if(copytext(tdata, 1, 3) == "/?")
-		tdata = copytext(tdata, 3)
+	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -287,11 +224,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
-
-	// Instantiate tgui panel
-	tgui_panel = new(src)
-
-	tgui_panel?.send_connected()
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
@@ -302,7 +234,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.owner = src
 		connecting_admin = TRUE
 	else if(GLOB.deadmins[ckey])
-		add_verb(src, /client/proc/readmin)
+		verbs += /client/proc/readmin
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
@@ -320,16 +252,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(isnull(address) || (address in localhost_addresses))
 			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
 			new /datum/admins(localhost_rank, ckey, 1, 1)
-
-	// yogs start - mentor stuff
-	if(ckey in GLOB.mentor_datums)
-		var/datum/mentors/mentor = GLOB.mentor_datums[ckey]
-		src.mentor_datum = mentor
-		src.add_mentor_verbs()
-		if(!check_rights_for(src, R_ADMIN,0)) // don't add admins to mentor list.
-			GLOB.mentors += src
-	// yogs end
-
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -342,7 +264,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fps = prefs.clientfps
 
 	if(fexists(roundend_report_file()))
-		add_verb(src, /client/proc/show_previous_roundend_report)
+		verbs += /client/proc/show_previous_roundend_report
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
@@ -388,6 +310,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			prefs.yogtoggles &= ~QUIET_ROUND
 			prefs.save_preferences()
 	// yogs end
+	// yogs start - mentor stuff
+	if(ckey in GLOB.mentor_datums)
+		var/datum/mentors/mentor = GLOB.mentor_datums[ckey]
+		src.mentor_datum = mentor
+		src.add_mentor_verbs()
+		if(!check_rights_for(src, R_ADMIN,0)) // don't add admins to mentor list.
+			GLOB.mentors += src
+	// yogs end
+
+
 	. = ..()	//calls mob.Login()
 
 	if (byond_version >= 512)
@@ -413,11 +345,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	src << browse(file('html/statbrowser.html'), "window=statbrowser")
 
-	// Initialize tgui panel
-	tgui_panel.initialize()
-	src << browse(file('html/statbrowser.html'), "window=statbrowser")
-	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
-
+	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -552,22 +480,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fit_viewport()
 	Master.UpdateTickRate()
 
-	//Client needs to exists for what follows
-	. = ..()
-
-	//Linking process
-	var/list/params = params2list(tdata)
-	if(params["discordlink"])
-		do_discord_link(params["discordlink"])
-
-
 //////////////
 //DISCONNECT//
 //////////////
 
 /client/Del()
-	//if(credits)
-		//QDEL_LIST(credits)
+	if(credits)
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
@@ -853,17 +772,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/note_randomizer_user()
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
 
-
-/**
-  * Makes the server note a player
-  *
-  * Automatically checks that we haven't noted them with the same system_ckey in the last day, and that their last note is not from that ckey either
-  * Arguments:
-  ** system_ckey The ckey of the server giving the note
-  ** message The actual message
-  ** avoid_duplicate Should we NEVER add a note with the same message?
-  */
-/client/proc/add_system_note(system_ckey, message, avoid_duplicate = FALSE)
+/client/proc/add_system_note(system_ckey, message)
 	//check to see if we noted them in the last day.
 	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery(
 		"SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = :targetckey AND adminckey = :adminckey AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)",
@@ -889,19 +798,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(query_get_notes)
 			return
 	qdel(query_get_notes)
-	if(avoid_duplicate)
-		query_get_notes = SSdbcore.NewQuery(
-			"SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = :targetckey AND deleted = 0 AND text = :message AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC",
-			list("targetckey" = ckey, "message" = message)
-		)
-		if(!query_get_notes.Execute())
-			qdel(query_get_notes)
-			return
-		if(query_get_notes.NextRow())
-			if (query_get_notes.item[1] == system_ckey)
-				qdel(query_get_notes)
-				return
-
 	//create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0, 0)
 	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0) //yogs -
 
@@ -972,9 +868,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
-		add_verb(src, /client/proc/self_notes)
+		verbs += /client/proc/self_notes
 	if(CONFIG_GET(flag/use_exp_tracking))
-		add_verb(src, /client/proc/self_playtime)
+		verbs += /client/proc/self_playtime
 
 
 #undef UPLOAD_LIMIT
@@ -986,24 +882,30 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return inactivity
 	return FALSE
 
-/// Send resources to the client.
-/// Sends both game resources and browser assets.
+//send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 #if (PRELOAD_RSC == 0)
 	var/static/next_external_rsc = 0
-	var/list/external_rsc_urls = CONFIG_GET(keyed_list/external_rsc_urls)
-	if(length(external_rsc_urls))
-		next_external_rsc = WRAP(next_external_rsc+1, 1, external_rsc_urls.len+1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
+	if(GLOB.external_rsc_urls && GLOB.external_rsc_urls.len)
+		next_external_rsc = WRAP(next_external_rsc+1, 1, GLOB.external_rsc_urls.len+1)
+		preload_rsc = GLOB.external_rsc_urls[next_external_rsc]
 #endif
+	//get the common files
+	getFiles(
+		'html/search.js',
+		'html/panels.css',
+		'html/browser/common.js',
+		'html/browser/common.css',
+		'html/browser/scannernew.css',
+		'html/browser/playeroptions.css',
+		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		if (CONFIG_GET(flag/asset_simple_preload))
-			addtimer(CALLBACK(SSassets.transport, /datum/asset_transport.proc/send_assets_slow, src, SSassets.transport.preload), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/getFilesSlow, src, SSassets.preload, FALSE), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
@@ -1088,33 +990,3 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		screen -= S
 		qdel(S)
 	char_render_holders = null
-
-
-/// compiles a full list of verbs and sends it to the browser
-/client/proc/init_verbs()
-	if(IsAdminAdvancedProcCall())
-		return
-	var/list/verblist = list()
-	var/list/verbstoprocess = verbs.Copy()
-	if(mob)
-		verbstoprocess += mob.verbs
-		for(var/AM in mob.contents)
-			var/atom/movable/thing = AM
-			verbstoprocess += thing.verbs
-	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
-	for(var/thing in verbstoprocess)
-		var/procpath/verb_to_init = thing
-		if(!verb_to_init)
-			continue
-		if(verb_to_init.hidden)
-			continue
-		if(!istext(verb_to_init.category))
-			continue
-		panel_tabs |= verb_to_init.category
-		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src << output("[url_encode(json_encode(panel_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
-
-/client/proc/check_panel_loaded()
-	if(statbrowser_ready)
-		return
-	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")

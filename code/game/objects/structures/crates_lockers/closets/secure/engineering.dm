@@ -24,6 +24,7 @@
 	new /obj/item/storage/photo_album/CE(src)
 	new /obj/item/energy_harvester(src)
 	new /obj/item/clipboard/yog/paperwork/ce(src)
+	new /obj/item/card/id/departmental_budget/eng(src)
 	new /obj/item/poster/firstsingularity(src)
 	new /obj/item/storage/backpack/duffelbag/engineering/chief/clothing(src)
 

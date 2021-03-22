@@ -18,7 +18,7 @@
 	refill_canister = /obj/item/vending_refill/wallgene
 	default_price = 25
 	extra_price = 100
-	payment_department = ACCOUNT_MED
+	payment_department = ACCOUNT_SCI
 
 /obj/item/vending_refill/wallgene
 	machine_name = "NanoGene"

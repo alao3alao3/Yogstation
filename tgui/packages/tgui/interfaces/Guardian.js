@@ -1,8 +1,7 @@
 import { Fragment } from 'inferno';
-import { Button, LabeledList, Section, Table, Tabs } from '../components';
+import { Button, LabeledList, Section, Tabs } from '../components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { TableRow } from '../components/Table';
 
 export const Guardian = (props, context) => {
   const { act, data } = useBackend(context);
@@ -14,7 +13,7 @@ export const Guardian = (props, context) => {
     5: "A",
   };
   return (
-    <Window resizable width={700} height={600}>
+    <Window resizable>
       <Window.Content scrollable>
         <LabeledList>
           <LabeledList.Item
@@ -23,8 +22,8 @@ export const Guardian = (props, context) => {
             {data.points}
           </LabeledList.Item>
         </LabeledList>
-        <Table>
-          <TableRow
+        <Tabs>
+          <Tabs.Tab
             key="General"
             label="General">
             <Section
@@ -49,8 +48,8 @@ export const Guardian = (props, context) => {
                 disabled={data.melee && data.points < 3}
                 onClick={() => act('ranged')} />
             </Section>
-          </TableRow>
-          <TableRow
+          </Tabs.Tab>
+          <Tabs.Tab
             key="stats"
             label="Stats">
             <LabeledList>
@@ -86,8 +85,8 @@ export const Guardian = (props, context) => {
                 </LabeledList.Item>
               ))}
             </LabeledList>
-          </TableRow>
-          <TableRow
+          </Tabs.Tab>
+          <Tabs.Tab
             key="ability_major"
             label="Major Ability">
             {data.abilities_major.map(ability => (
@@ -104,8 +103,8 @@ export const Guardian = (props, context) => {
                   onClick={() => act('ability_major', { path: ability.path })} />
               </LabeledList.Item>
             ))}
-          </TableRow>
-          <TableRow
+          </Tabs.Tab>
+          <Tabs.Tab
             key="ability_minor"
             label="Minor Abilities">
             {data.abilities_minor.map(ability => (
@@ -121,8 +120,8 @@ export const Guardian = (props, context) => {
                   onClick={() => act('ability_minor', { path: ability.path })} />
               </LabeledList.Item>
             ))}
-          </TableRow>
-          <TableRow
+          </Tabs.Tab>
+          <Tabs.Tab
             key="create"
             label="Create">
             <Section
@@ -167,7 +166,7 @@ export const Guardian = (props, context) => {
                       key={ability.name}
                       className="candystripe"
                       label={ability.name}>
-                      {ability.desc}<br /><br />
+                      {ability.desc}
                     </LabeledList.Item>
                   ))
                 ))}
@@ -175,10 +174,10 @@ export const Guardian = (props, context) => {
             </Section>
             <Button
               content={"Summon " + data.name}
-              style={{ width: '100%', 'text-align': 'center', position: 'fixed', bottom: '0px' }}
+              style={{ width: '100%', 'text-align': 'center', position: 'fixed', bottom: '12px' }}
               onClick={() => act('spawn')} />
-          </TableRow>
-        </Table>
+          </Tabs.Tab>
+        </Tabs>
       </Window.Content>
     </Window>
   );

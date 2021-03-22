@@ -36,19 +36,17 @@ Bonus
 	)
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalResistance() >= 6)
+	if(A.properties["resistance"] >= 6)
 		brain_damage = TRUE
-	if(A.totalTransmittable() >= 6)
+	if(A.properties["transmittable"] >= 6)
 		power = 1.5
-	if(A.totalStealth() >= 4)
+	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 
 /datum/symptom/confusion/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)

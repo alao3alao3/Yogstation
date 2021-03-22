@@ -16,7 +16,7 @@
 	air_update_turf(1)
 	return ..()
 
-/obj/structure/spacepoddoor/CanAllowThrough(atom/movable/A)
+/obj/structure/spacepoddoor/CanPass(atom/movable/A, turf/T)
 	if(istype(A, /obj/spacepod))
 		return TRUE
 	return ..()

@@ -21,8 +21,6 @@
 	var/toggle_cooldown = null
 	var/cooldown = 0
 
-	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
-
 	var/clothing_flags = NONE
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
@@ -173,7 +171,7 @@ SEE_MOBS  // can see all mobs, no matter what
 SEE_OBJS  // can see all objs, no matter what
 SEE_TURFS // can see all turfs (and areas), no matter what
 SEE_PIXELS// if an object is located on an unlit area, but some of its pixels are
-		  // in a lit area (via pixel_x,y or smooth movement), can see those pixels
+          // in a lit area (via pixel_x,y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
 
@@ -244,14 +242,7 @@ BLIND     // can't see anything
 	set src in usr
 	rolldown()
 
-/obj/item/clothing/under/proc/rolldown(bypass = FALSE)
-	if(bypass)
-		toggle_jumpsuit_adjust()
-		if(usr)
-			var/mob/living/carbon/human/H = usr
-			H.update_inv_w_uniform()
-			H.update_body()
-		return
+/obj/item/clothing/under/proc/rolldown()
 	if(!can_use(usr))
 		return
 	if(!can_adjust)

@@ -75,5 +75,5 @@
 	name = "Wooden Barrel"
 	result = /obj/structure/fermenting_barrel
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 30)
-	time = 5 SECONDS
+	time = 50
 	category = CAT_PRIMAL

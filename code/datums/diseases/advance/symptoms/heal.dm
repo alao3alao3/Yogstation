@@ -16,15 +16,13 @@
 	)
 
 /datum/symptom/heal/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 6) //stronger healing
+	if(A.properties["stage_rate"] >= 6) //stronger healing
 		power = 2
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -64,12 +62,11 @@
 	)
 
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalTransmittable() >= 6)
+	if(A.properties["transmittable"] >= 6)
 		nearspace_penalty = 1
-	if(A.totalStageSpeed() >= 6)
+	if(A.properties["stage_rate"] >= 6)
 		power = 2
 
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
@@ -118,12 +115,11 @@
 	)
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 6)
+	if(A.properties["stage_rate"] >= 6)
 		food_conversion = TRUE
-	if(A.totalResistance() >= 7)
+	if(A.properties["resistance"] >= 7)
 		power = 2
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
@@ -154,12 +150,11 @@
 	)
 
 /datum/symptom/heal/metabolism/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 10)
+	if(A.properties["stage_rate"] >= 10)
 		triple_metabolism = TRUE
-	if(A.totalStealth() >= 3)
+	if(A.properties["stealth"] >= 3)
 		reduced_hunger = TRUE
 
 /datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
@@ -189,10 +184,9 @@
 	)
 
 /datum/symptom/heal/darkness/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 8)
+	if(A.properties["stage_rate"] >= 8)
 		power = 2
 
 /datum/symptom/heal/darkness/CanHeal(datum/disease/advance/A)
@@ -243,12 +237,11 @@
 	)
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(A.properties["stage_rate"] >= 7)
 		power = 1.5
-	if(A.totalStealth() >= 2)
+	if(A.properties["stealth"] >= 2)
 		deathgasp = TRUE
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
@@ -320,12 +313,11 @@
 	)
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(A.properties["stage_rate"] >= 7)
 		power = 2
-	if(A.totalResistance() >= 5)
+	if(A.properties["resistance"] >= 5)
 		absorption_coeff = 0.25
 
 /datum/symptom/heal/water/CanHeal(datum/disease/advance/A)
@@ -379,12 +371,11 @@
 	)
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(A.properties["stage_rate"] >= 7)
 		power = 2
-	if(A.totalTransmittable() >= 6)
+	if(A.properties["transmittable"] >= 6)
 		temp_rate = 4
 
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
@@ -447,12 +438,11 @@
 	)
 
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalResistance() >= 7)
+	if(A.properties["resistance"] >= 7)
 		power = 2
-	if(A.totalTransmittable() >= 6)
+	if(A.properties["transmittable"] >= 6)
 		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)

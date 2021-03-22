@@ -192,11 +192,6 @@
 	name = "Runtime's bed"
 	anchored = TRUE
 
-/obj/structure/bed/dogbed/birdboat
-	desc = "A former dog bed, now covered in droppings and scratches. Ew."
-	name = "Birdboat's bed"
-	anchored = TRUE
-
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
 	owner = M
 	name = "[M]'s bed"
