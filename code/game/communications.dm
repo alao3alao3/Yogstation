@@ -1,5 +1,5 @@
 /*
-  HOW IT WORKS
+  HOW IT Bababooey 
 
   The SSradio is a global object maintaining all radio transmissions, think about it as about "ether".
   Note that walkie-talkie, intercoms and headsets handle transmission using nonstandard way.
