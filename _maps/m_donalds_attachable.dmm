@@ -29,19 +29,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/space)
-"bd" = (
-/obj/structure/closet/secure_closet/bar,
-/obj/machinery/camera{
-	c_tag = "MDonalds Bar Storage"
-	},
-/turf/open/floor/wood,
-/area/space)
-"bu" = (
-/obj/machinery/camera{
-	c_tag = "MDonalds Grills 2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/space)
 "bz" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -117,10 +104,6 @@
 	},
 /turf/open/floor/grass,
 /area/space)
-"cI" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "cK" = (
 /obj/structure/sink{
 	dir = 8;
@@ -183,35 +166,12 @@
 	},
 /turf/open/floor/carpet/green,
 /area/space)
-"eD" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/public/glass{
-	name = "MDonalds Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "fd" = (
 /obj/machinery/deepfryer,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/space)
-"fk" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/space)
-"fs" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/carpet/green,
 /area/space)
 "fD" = (
 /obj/machinery/door/airlock{
@@ -231,14 +191,6 @@
 	},
 /turf/open/floor/grass,
 /area/space)
-"ga" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/shaker{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/turf/open/floor/wood,
-/area/space)
 "gb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -256,12 +208,9 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/plasteel/dark,
 /area/space)
-"gt" = (
-/obj/machinery/camera{
-	c_tag = "MDonalds Central Diner 1";
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
+"ha" = (
+/obj/structure/closet/secure_closet/bar,
+/turf/open/floor/wood,
 /area/space)
 "hu" = (
 /obj/structure/table/wood/fancy/cyan,
@@ -366,14 +315,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/dark,
 /area/space)
-"lz" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/blood{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/turf/open/floor/wood,
-/area/space)
 "lB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -444,13 +385,6 @@
 "oW" = (
 /turf/open/floor/plasteel,
 /area/space)
-"po" = (
-/obj/machinery/camera{
-	c_tag = "MDonalds Central Diner 2";
-	dir = 8
-	},
-/turf/open/floor/carpet/green,
-/area/space)
 "pG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -465,13 +399,6 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/space)
-"pI" = (
-/obj/machinery/camera{
-	c_tag = "MDonalds Grills 1";
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
 /area/space)
 "pR" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -548,16 +475,6 @@
 	},
 /turf/open/floor/grass,
 /area/space)
-"sD" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/public/glass{
-	name = "MDonalds Lounge"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "sK" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
@@ -574,6 +491,18 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
+/area/space)
+"sY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/blood{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
 /area/space)
 "tn" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -718,10 +647,6 @@
 	},
 /turf/open/floor/grass,
 /area/space)
-"wY" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/dark,
-/area/space)
 "xs" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Coldroom";
@@ -753,6 +678,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/space)
+"ya" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel,
+/area/space)
 "yk" = (
 /obj/structure/table/wood/fancy/cyan,
 /obj/item/clothing/head/hardhat/cakehat,
@@ -763,6 +695,12 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
+/area/space)
+"yv" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
 /area/space)
 "yy" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
@@ -843,10 +781,6 @@
 "BF" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/space)
-"BI" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/wood,
-/area/space)
 "BK" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
@@ -884,6 +818,12 @@
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/wood,
 /area/space)
+"CE" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "MDonalds Lounge"
+	},
+/turf/open/floor/carpet/green,
+/area/space)
 "CL" = (
 /obj/item/clothing/under/janimaid{
 	pixel_x = -3;
@@ -913,13 +853,6 @@
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/shoes/laceup,
 /turf/open/floor/wood,
-/area/space)
-"CT" = (
-/obj/machinery/camera{
-	c_tag = "MDonalds Lounge";
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
 /area/space)
 "Dp" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
@@ -951,14 +884,6 @@
 /area/space)
 "EP" = (
 /turf/closed/wall,
-/area/space)
-"ES" = (
-/obj/structure/kitchenspike,
-/obj/machinery/camera{
-	c_tag = "MDonalds Kitchen Storage";
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
 /area/space)
 "Fm" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -1047,10 +972,6 @@
 	dir = 1
 	},
 /area/space)
-"KG" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "KJ" = (
 /obj/effect/turf_decal/stripes{
 	dir = 6
@@ -1098,14 +1019,6 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
-/area/space)
-"LK" = (
-/obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "MDonalds Central Diner 3";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
 /area/space)
 "LN" = (
 /obj/structure/table/reinforced,
@@ -1269,10 +1182,6 @@
 	dir = 8
 	},
 /turf/open/floor/grass,
-/area/space)
-"Pi" = (
-/obj/effect/landmark/stationroom/mdonalds/singulo_grill,
-/turf/open/floor/plasteel,
 /area/space)
 "Pn" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
@@ -1506,10 +1415,6 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/space)
-"ZC" = (
-/obj/structure/grille,
-/turf/open/space/basic,
 /area/space)
 "ZQ" = (
 /turf/open/floor/plasteel/freezer,
@@ -1798,19 +1703,19 @@ cm
 cm
 cm
 cm
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
-cI
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 cm
 cm
 cm
@@ -1849,8 +1754,8 @@ cm
 cm
 cm
 cm
-cI
-cI
+cm
+cm
 rX
 rX
 rX
@@ -1862,8 +1767,8 @@ rX
 rX
 rX
 rX
-cI
-cI
+cm
+cm
 cm
 cm
 cm
@@ -1900,8 +1805,8 @@ cm
 cm
 cm
 cm
-cI
-cI
+cm
+cm
 rX
 rX
 Nn
@@ -1915,8 +1820,8 @@ cK
 cB
 rX
 rX
-cI
-cI
+cm
+cm
 cm
 cm
 cm
@@ -1951,8 +1856,8 @@ cm
 cm
 cm
 cm
-cI
-cI
+cm
+cm
 rX
 rX
 Bg
@@ -1968,8 +1873,8 @@ At
 At
 rX
 rX
-cI
-cI
+cm
+cm
 cm
 cm
 cm
@@ -1995,15 +1900,15 @@ cm
 cm
 cm
 cm
-ZC
-ZC
-ZC
-ZC
-ZC
-ZC
-ZC
 cm
-cI
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 rX
 rX
 Ow
@@ -2021,8 +1926,8 @@ At
 Kh
 rX
 rX
-cI
-cI
+cm
+cm
 cm
 cm
 cm
@@ -2046,13 +1951,13 @@ cm
 cm
 cm
 cm
-ZC
-ZC
-cm
-KG
 cm
 cm
-KG
+cm
+cm
+cm
+cm
+cm
 cm
 cm
 rX
@@ -2074,7 +1979,7 @@ EP
 EP
 rX
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2097,15 +2002,15 @@ cm
 cm
 cm
 cm
-ZC
-ZC
 cm
-rX
-rX
-rX
-rX
-rX
-rX
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 rX
 rX
 EP
@@ -2122,12 +2027,12 @@ Va
 EP
 cl
 At
-CT
+At
 KQ
 UD
 rX
-cI
-cI
+cm
+cm
 cm
 cm
 cm
@@ -2149,20 +2054,20 @@ cm
 cm
 cm
 cm
-ZC
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 cm
 rX
-rX
 At
 At
 At
 At
-At
-At
-At
-At
-At
-pI
 At
 At
 At
@@ -2179,8 +2084,8 @@ MK
 jr
 rX
 rX
-cI
-cI
+cm
+cm
 cm
 cm
 cm
@@ -2201,16 +2106,16 @@ cm
 cm
 cm
 cm
-ZC
-KG
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 rX
-wY
-At
-oW
-oW
-oW
-oW
-Pi
 At
 oW
 oW
@@ -2232,7 +2137,7 @@ pG
 Be
 rX
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2253,21 +2158,21 @@ cm
 cm
 cm
 cm
-ZC
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 cm
 rX
-wY
 At
 oW
+ya
 oW
-oW
-oW
-oW
-At
-oW
-oW
-oW
-oW
+ya
 oW
 EP
 el
@@ -2284,7 +2189,7 @@ tn
 At
 aY
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2305,21 +2210,21 @@ cm
 cm
 cm
 cm
-ZC
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 cm
 rX
-wY
-At
-oW
-oW
-oW
-oW
-oW
 Vj
 oW
+ya
 oW
-oW
-oW
+ya
 oW
 EP
 EP
@@ -2336,7 +2241,7 @@ Tb
 At
 Lw
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2357,21 +2262,21 @@ cm
 cm
 cm
 cm
-ZC
-KG
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 rX
-wY
 At
 oW
+ya
 oW
-oW
-oW
-oW
-At
-oW
-oW
-oW
-oW
+ya
 oW
 EP
 el
@@ -2388,7 +2293,7 @@ tn
 At
 si
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2409,16 +2314,16 @@ cm
 cm
 cm
 cm
-ZC
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 cm
 rX
-rX
-bu
-oW
-oW
-oW
-oW
-oW
 At
 oW
 oW
@@ -2440,7 +2345,7 @@ Rv
 At
 kV
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2464,10 +2369,10 @@ cm
 cm
 cm
 cm
-rX
-rX
-rX
-rX
+cm
+cm
+cm
+cm
 rX
 rX
 rX
@@ -2492,7 +2397,7 @@ EP
 LN
 EP
 rX
-cI
+cm
 cm
 cm
 cm
@@ -2517,13 +2422,13 @@ cm
 cm
 cm
 cm
-KG
+cm
 cm
 cm
 rX
+rX
 sK
 gb
-mq
 Rp
 rX
 Fm
@@ -2540,11 +2445,11 @@ nt
 St
 jZ
 EP
-TO
+hG
 bY
 Pn
 rX
-rX
+cm
 cm
 cm
 cm
@@ -2569,11 +2474,11 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 cm
 rX
-bd
+rX
 mq
 mq
 mq
@@ -2595,8 +2500,8 @@ xs
 ZQ
 ZQ
 ZQ
-hG
 rX
+cm
 cm
 cm
 cm
@@ -2621,14 +2526,14 @@ cm
 cm
 cm
 cm
-ZC
-KG
-KG
+cm
+cm
+cm
 rX
 rX
-lz
+ha
 qT
-ga
+sY
 rX
 zT
 qL
@@ -2644,11 +2549,11 @@ BF
 BF
 vb
 EP
-ES
+TO
 xu
 iN
 rX
-rX
+cm
 cm
 cm
 cm
@@ -2673,9 +2578,9 @@ cm
 cm
 cm
 cm
-ZC
 cm
-KG
+cm
+cm
 cm
 rX
 rX
@@ -2725,13 +2630,13 @@ cm
 cm
 cm
 cm
-ZC
 cm
-KG
-KG
-KG
 cm
-KG
+cm
+cm
+cm
+cm
+cm
 cm
 rX
 MM
@@ -2748,9 +2653,9 @@ BF
 BF
 Mk
 rX
-KG
 cm
-KG
+cm
+cm
 cm
 cm
 cm
@@ -2777,13 +2682,13 @@ cm
 cm
 cm
 cm
-ZC
 cm
 cm
 cm
-KG
 cm
-KG
+cm
+cm
+cm
 cm
 rX
 KP
@@ -2800,9 +2705,9 @@ BF
 BF
 hN
 rX
-KG
 cm
-ZC
+cm
+cm
 cm
 cm
 cm
@@ -2829,14 +2734,14 @@ cm
 cm
 cm
 cm
-ZC
-ZC
-ZC
-ZC
-ZC
-KG
-KG
-KG
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 rX
 wu
 qL
@@ -2852,9 +2757,9 @@ QH
 RF
 BK
 rX
-KG
 cm
-ZC
+cm
+cm
 cm
 cm
 cm
@@ -2885,9 +2790,9 @@ cm
 cm
 cm
 cm
-ZC
 cm
-KG
+cm
+cm
 cm
 rX
 EP
@@ -2904,9 +2809,9 @@ EP
 EP
 EP
 rX
-KG
 cm
-ZC
+cm
+cm
 cm
 cm
 cm
@@ -2937,17 +2842,17 @@ cm
 cm
 cm
 cm
-ZC
-KG
-KG
-KG
+cm
+cm
+cm
+cm
 Yz
 el
 kS
 Qj
 Qj
 Yr
-gt
+At
 At
 At
 Yr
@@ -2956,9 +2861,9 @@ At
 aD
 VJ
 Yz
-KG
 cm
-ZC
+cm
+cm
 cm
 cm
 cm
@@ -2991,7 +2896,7 @@ cm
 cm
 cm
 cm
-KG
+cm
 cm
 Yz
 wH
@@ -3010,7 +2915,7 @@ dJ
 Yz
 cm
 cm
-ZC
+cm
 cm
 cm
 cm
@@ -3043,7 +2948,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 uX
@@ -3062,7 +2967,7 @@ FV
 Yz
 cm
 cm
-ZC
+cm
 cm
 cm
 cm
@@ -3095,8 +3000,8 @@ cm
 cm
 cm
 cm
-ZC
-KG
+cm
+cm
 rX
 vT
 Kn
@@ -3110,11 +3015,11 @@ my
 At
 Ia
 oW
-LK
+IZ
 rX
-KG
-ZC
-ZC
+cm
+cm
+cm
 cm
 cm
 cm
@@ -3147,7 +3052,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 uu
@@ -3165,7 +3070,7 @@ wr
 VJ
 Yz
 cm
-ZC
+cm
 cm
 cm
 cm
@@ -3199,7 +3104,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 wH
@@ -3217,7 +3122,7 @@ dJ
 dJ
 Yz
 cm
-ZC
+cm
 cm
 cm
 cm
@@ -3251,7 +3156,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 Hl
@@ -3269,7 +3174,7 @@ Xs
 FV
 Yz
 cm
-ZC
+cm
 cm
 cm
 cm
@@ -3303,8 +3208,8 @@ cm
 cm
 cm
 cm
-ZC
-KG
+cm
+cm
 rX
 NA
 Kn
@@ -3320,8 +3225,8 @@ Ia
 oW
 IZ
 rX
-KG
-ZC
+cm
+cm
 cm
 cm
 cm
@@ -3355,7 +3260,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 uu
@@ -3373,7 +3278,7 @@ wr
 VJ
 Yz
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3407,7 +3312,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 wH
@@ -3425,7 +3330,7 @@ dJ
 dJ
 Yz
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3459,7 +3364,7 @@ cm
 cm
 cm
 cm
-ZC
+cm
 cm
 Yz
 el
@@ -3469,7 +3374,7 @@ nx
 nx
 nx
 Bk
-po
+nx
 nx
 nx
 MP
@@ -3477,7 +3382,7 @@ mm
 FV
 Yz
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3511,8 +3416,8 @@ cm
 cm
 cm
 cm
-ZC
-KG
+cm
+cm
 rX
 Yz
 Yz
@@ -3528,8 +3433,8 @@ rX
 Yz
 Yz
 rX
-KG
-KG
+cm
+cm
 cm
 cm
 cm
@@ -3563,9 +3468,9 @@ cm
 cm
 cm
 cm
-ZC
 cm
-KG
+cm
+cm
 cm
 cm
 Yz
@@ -3577,9 +3482,9 @@ AF
 nx
 yX
 Yz
-KG
 cm
-KG
+cm
+cm
 cm
 cm
 cm
@@ -3615,11 +3520,11 @@ cm
 cm
 cm
 cm
-ZC
-ZC
-ZC
-ZC
-KG
+cm
+cm
+cm
+cm
+cm
 Yz
 eo
 nx
@@ -3631,7 +3536,7 @@ yr
 Yz
 cm
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3683,7 +3588,7 @@ Zf
 Yz
 cm
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3733,9 +3638,9 @@ nx
 nx
 Xg
 rX
-KG
-KG
-KG
+cm
+cm
+cm
 cm
 cm
 cm
@@ -3786,7 +3691,7 @@ mq
 uf
 Yz
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3838,7 +3743,7 @@ mq
 vM
 Yz
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3882,15 +3787,15 @@ cm
 cm
 Yz
 hQ
-BI
-fs
+yv
 nx
-fs
-fk
+nx
+nx
+yv
 Up
 Yz
 cm
-KG
+cm
 cm
 cm
 cm
@@ -3934,15 +3839,15 @@ cm
 cm
 rX
 Yz
+rX
+CE
+rX
+CE
+rX
 Yz
 rX
-sD
-rX
-Yz
-Yz
-rX
-KG
-KG
+cm
+cm
 cm
 cm
 cm
@@ -3987,9 +3892,9 @@ cm
 cm
 cm
 cm
-Yz
-oW
-Yz
+cm
+cm
+cm
 cm
 cm
 cm
@@ -4039,9 +3944,9 @@ cm
 cm
 cm
 cm
-Yz
-oW
-Yz
+cm
+cm
+cm
 cm
 cm
 cm
@@ -4091,9 +3996,9 @@ cm
 cm
 cm
 cm
-EP
-eD
-EP
+cm
+cm
+cm
 cm
 cm
 cm
