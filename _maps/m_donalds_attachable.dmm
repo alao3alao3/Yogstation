@@ -166,6 +166,12 @@
 	},
 /turf/open/floor/carpet/green,
 /area/space)
+"eA" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "MDonalds Lounge"
+	},
+/turf/open/floor/carpet/green,
+/area/space)
 "fd" = (
 /obj/machinery/deepfryer,
 /obj/machinery/light{
@@ -207,10 +213,6 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/plasteel/dark,
-/area/space)
-"ha" = (
-/obj/structure/closet/secure_closet/bar,
-/turf/open/floor/wood,
 /area/space)
 "hu" = (
 /obj/structure/table/wood/fancy/cyan,
@@ -353,12 +355,22 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/space)
+"ne" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/space)
 "nt" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/plasteel/cafeteria,
 /area/space)
 "nx" = (
 /turf/open/floor/carpet/green,
+/area/space)
+"nZ" = (
+/obj/structure/closet/secure_closet/bar,
+/turf/open/floor/wood,
 /area/space)
 "oe" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -491,18 +503,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/space)
-"sY" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/shaker{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/blood{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/turf/open/floor/wood,
 /area/space)
 "tn" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -678,13 +678,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/space)
-"ya" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_y = 10
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "yk" = (
 /obj/structure/table/wood/fancy/cyan,
 /obj/item/clothing/head/hardhat/cakehat,
@@ -695,12 +688,6 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/space)
-"yv" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
 /area/space)
 "yy" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
@@ -817,12 +804,6 @@
 "Cp" = (
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/wood,
-/area/space)
-"CE" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "MDonalds Lounge"
-	},
-/turf/open/floor/carpet/green,
 /area/space)
 "CL" = (
 /obj/item/clothing/under/janimaid{
@@ -1351,6 +1332,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/space)
+"VS" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/blood{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/space)
 "Wb" = (
 /obj/structure/table/wood,
 /obj/item/soap/deluxe,
@@ -1361,6 +1354,13 @@
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
+/area/space)
+"Wn" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel,
 /area/space)
 "Wy" = (
 /obj/structure/piano{
@@ -2170,9 +2170,9 @@ cm
 rX
 At
 oW
-ya
+Wn
 oW
-ya
+Wn
 oW
 EP
 el
@@ -2222,9 +2222,9 @@ cm
 rX
 Vj
 oW
-ya
+Wn
 oW
-ya
+Wn
 oW
 EP
 EP
@@ -2274,9 +2274,9 @@ cm
 rX
 At
 oW
-ya
+Wn
 oW
-ya
+Wn
 oW
 EP
 el
@@ -2531,9 +2531,9 @@ cm
 cm
 rX
 rX
-ha
+nZ
 qT
-sY
+VS
 rX
 zT
 qL
@@ -3787,11 +3787,11 @@ cm
 cm
 Yz
 hQ
-yv
+ne
 nx
 nx
 nx
-yv
+ne
 Up
 Yz
 cm
@@ -3840,9 +3840,9 @@ cm
 rX
 Yz
 rX
-CE
+eA
 rX
-CE
+eA
 rX
 Yz
 rX
